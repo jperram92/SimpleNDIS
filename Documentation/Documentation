@@ -1,0 +1,387 @@
+# NDIS Web App — Technical Blueprint (v1)
+
+> This blueprint gives you a production‑ready starting point for a disability‑focused NDIS web app. It includes architecture, data model, API contracts, UI patterns, compliance notes, and scaffolding you can drop into a Next.js/TypeScript stack. When you paste your “basic imports”, we’ll tailor the code to match exactly.
+
+---
+
+## 1) Product Scope & MVP
+
+**Problem focus:** End‑to‑end NDIS participant support with strong compliance: onboarding, plan/budget visibility, service booking, timesheets, claiming, and invoicing.
+
+**MVP outcomes**
+
+* Participant onboarding + consent capture
+* Service catalogue & pricing (NDIS price guide aligned)
+* Bookings (appointments) & worker assignment
+* Timesheets (SCHADS‑aware) with travel & non‑labour items
+* Claim generation & export (PACE/PRODA pipeline ready)
+* Basic invoicing + remittance tracking
+* Accessibility (WCAG 2.2 AA) & audit trail everywhere
+
+**Phase 2**
+
+* Participant portal (goals, statements, approvals)
+* Provider travel rules engine & award compliance wizard
+* Plan manager integrations, EInvoicing / PEPPOL
+* Document management + secure sharing (care plans, risks)
+
+---
+
+## 2) Personas & Roles
+
+* **Participant** (and/or Nominee) — view plan, approve services, download statements
+* **Support Worker** — view roster, log time, travel, notes
+* **Scheduler / Coordinator** — plan services, ensure budget fit, manage changes
+* **Finance Officer** — review claims, exports, reversals, adjustments
+* **Admin** — manage price books, suppliers, risk/compliance settings
+
+Role‑based access via policy (RBAC + attribute checks: participant relationships, organisation, program).
+
+---
+
+## 3) Architecture Overview
+
+**Recommended stack**
+
+* **Frontend**: Next.js (App Router), TypeScript, React Server Components, Tailwind, shadcn/ui, React Hook Form + Zod
+* **Backend**: Next.js API routes (or /api edge), tRPC optional; Prisma ORM on **Postgres** (Neon/Supabase)
+* **Auth**: NextAuth (OIDC/Cognito/Auth0) with fine‑grained RBAC; optional SSO for staff
+* **Storage**: S3‑compatible (R2/Supabase storage) for documents
+* **Queue/Jobs**: Inngest/Temporal (exports, notifications, reconciliation)
+* **Observability**: OpenTelemetry, Sentry, audit logs table + retention
+* **Infra**: Vercel/Netlify for web; Fly.io/Render for workers
+
+**Cross‑cutting**
+
+* **Audit & Consent** middleware wraps every mutation
+* **Data residency** flag per tenant; encryption‑at‑rest (FPE/column‑level)
+* **Feature flags** for releases (LaunchDarkly/Unleash)
+
+---
+
+## 4) Domain Model (ERD)
+
+```mermaid
+erDiagram
+  Participant ||--o{ PlanBudget : has
+  PlanBudget ||--o{ ServiceAgreement : funds
+  ServiceAgreement ||--o{ SALI : contains
+  ServiceAgreement }o--|| Provider : with
+  SALI ||--o{ Appointment : schedules
+  Appointment ||--o{ Timesheet : produces
+  Timesheet }o--|| Worker : by
+  Timesheet ||--o{ Claim : generates
+  Claim }o--|| Invoice : grouped_into
+  PriceBook ||--o{ PriceItem : has
+  PriceItem ||--o{ SALI : priced_by
+  TravelRule ||--o{ Timesheet : applied_to
+  Organization ||--o{ User : employs
+  User ||--o{ AuditEvent : triggers
+
+  Participant {
+    uuid id PK
+    text firstName
+    text lastName
+    date dob
+    text ndisNumber
+    json contacts // nominee/guardian contacts
+    bool consentCurrent
+  }
+  PlanBudget {
+    uuid id PK
+    uuid participantId FK
+    date start
+    date end
+    numeric totalBudget
+    numeric spent
+    json categories // by support category
+  }
+  ServiceAgreement {
+    uuid id PK
+    uuid planBudgetId FK
+    uuid providerId FK
+    date start
+    date end
+    text status // Draft, Active, Suspended, Closed
+    json billTo // participant/plan manager/other
+  }
+  SALI {
+    uuid id PK
+    uuid serviceAgreementId FK
+    uuid priceItemId FK
+    text supportNumber // NDIS item code
+    text uom // Hours, Each, KM
+    numeric unitPrice
+    numeric maxUnits
+  }
+  Appointment {
+    uuid id PK
+    uuid saliId FK
+    uuid participantId FK
+    uuid workerId FK
+    timestamptz start
+    timestamptz end
+    text status // Planned, Completed, Cancelled
+    json location // address, geo
+  }
+  Timesheet {
+    uuid id PK
+    uuid appointmentId FK
+    uuid workerId FK
+    numeric durationHours
+    numeric km
+    numeric nonLabourAmount // sundries, tolls, parking
+    text status // Draft, Submitted, Approved, Rejected
+    json calc // rule snapshots
+  }
+  Claim {
+    uuid id PK
+    uuid timesheetId FK
+    text claimType // Delivered, Cancellation, Adjustment
+    text supportNumber
+    numeric quantity
+    numeric unitPrice
+    numeric total
+    text exportStatus // Pending, Exported, Failed, Reversed
+    json exportPayload
+  }
+  Invoice {
+    uuid id PK
+    uuid serviceAgreementId FK
+    date issueDate
+    numeric amount
+    text status // Draft, Issued, Paid, PartPaid, Cancelled
+  }
+  PriceBook {
+    uuid id PK
+    text name
+    date validFrom
+    date validTo
+  }
+  PriceItem {
+    uuid id PK
+    uuid priceBookId FK
+    text supportNumber
+    text description
+    text uom
+    numeric priceCap
+  }
+  TravelRule {
+    uuid id PK
+    text name
+    json conditions // time-of-day, region, distance cap
+    json calculations // labour/non-labour formulas
+  }
+```
+
+---
+
+## 5) Compliance & Security
+
+* **Consent**: capture participant/nominee consent + renewal dates; block non‑essential processing if expired.
+* **Audit**: Write an `AuditEvent` on every create/update/delete; include actor, actor role, correlationId, before/after.
+* **PII Handling**: encrypt sensitive fields (ndisNumber, contacts) with KMS; field‑level access by role.
+* **Retention**: configure per‑tenant retention policies and automated purges.
+* **Accessibility**: keyboard‑first, ARIA patterns, focus traps, colour contrast, captioned media.
+
+---
+
+## 6) Pricing & Rules Engine (NDIS + SCHADS aware)
+
+* **Inputs**: PriceBook/PriceItem + SALI, appointment timing, public holidays, region, distance, service setting.
+* **Outputs**: line items (labour/non‑labour), caps, multipliers, cancellation windows, rounding rules.
+* Implement as **declarative rules** (JSON conditions) + deterministic calculator; persist the **calc snapshot** to Timesheet.
+
+**Example rule JSON**
+
+```json
+{
+  "name": "Evening Weekday Multiplier",
+  "when": { "dow": [1,2,3,4,5], "startTime": ">=18:00" },
+  "apply": { "multiplier": 1.15, "to": "labour" }
+}
+```
+
+---
+
+## 7) API Contracts (REST)
+
+**POST /api/participants** → create participant (consent check)
+**GET /api/participants/:id/plan** → budgets + spent
+**POST /api/appointments** → validate budget fit, create
+**POST /api/timesheets** → calculate + submit for approval
+**POST /api/claims/export** → batch by bill‑to & support numbers
+**POST /api/invoices/issue** → generate PDF + send bill‑to
+**POST /api/claims/reverse** → create reversal, lock original
+
+All mutating endpoints accept `x-correlation-id` and return an `auditId`.
+
+---
+
+## 8) Frontend UI Patterns
+
+* **Form stack**: React Hook Form + Zod, error summaries, progressive disclosure
+* **Table/Grids**: virtualized lists for claims/timesheets
+* **Assistive**: field explanations, inline “what’s this?” for NDIS jargon
+* **Wizard**: New Agreement → SALIs → Budget Check → Sign → Activate
+* **Scheduler**: drag‑drop, skill matching, travel time estimates
+
+---
+
+## 9) Folder Structure (Next.js)
+
+```
+/ (repo)
+  /app
+    /(dashboard)
+    /participants/[id]
+    /agreements/[id]
+    /claims
+    /invoices
+    /api
+      /participants/route.ts
+      /appointments/route.ts
+      /timesheets/route.ts
+      /claims/export/route.ts
+      /claims/reverse/route.ts
+  /components
+  /lib
+    auth.ts
+    db.ts
+    audit.ts
+    pricing/
+      engine.ts
+      rules.ts
+  /prisma
+    schema.prisma
+  /tests
+```
+
+---
+
+## 10) Prisma (excerpt)
+
+```prisma
+model Participant {
+  id           String   @id @default(uuid())
+  firstName    String
+  lastName     String
+  dob          DateTime?
+  ndisNumber   String   @db.VarChar(32)
+  contacts     Json?
+  consentCurrent Boolean @default(false)
+  planBudgets  PlanBudget[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model PlanBudget {
+  id            String   @id @default(uuid())
+  participantId String
+  participant   Participant @relation(fields: [participantId], references: [id])
+  start         DateTime
+  end           DateTime
+  totalBudget   Decimal @db.Decimal(18,2)
+  spent         Decimal @db.Decimal(18,2) @default(0)
+  categories    Json
+}
+
+model AuditEvent {
+  id        String   @id @default(uuid())
+  actorId   String
+  actorRole String
+  entity    String
+  entityId  String
+  action    String
+  before    Json?
+  after     Json?
+  ip        String?
+  at        DateTime @default(now())
+}
+```
+
+---
+
+## 11) Example API Route (Timesheet → Claim)
+
+```ts
+// app/api/timesheets/route.ts
+import { z } from "zod";
+import { db } from "@/lib/db";
+import { calculate } from "@/lib/pricing/engine";
+import { withAudit } from "@/lib/audit";
+
+const TimesheetSchema = z.object({
+  appointmentId: z.string().uuid(),
+  workerId: z.string().uuid(),
+  startedAt: z.string().datetime(),
+  endedAt: z.string().datetime(),
+  km: z.number().min(0).default(0),
+  nonLabourAmount: z.number().min(0).default(0)
+});
+
+export async function POST(req: Request) {
+  const body = await req.json();
+  const input = TimesheetSchema.parse(body);
+
+  return withAudit(req, async (actor) => {
+    const appt = await db.appointment.findUnique({ where: { id: input.appointmentId }, include: { sali: { include: { priceItem: true, serviceAgreement: { include: { planBudget: true } } } } } });
+    if (!appt) return Response.json({ error: "Appointment not found" }, { status: 404 });
+
+    const calc = calculate({ appt, input }); // returns line items + totals
+
+    const ts = await db.timesheet.create({ data: { ...input, durationHours: calc.durationHours, calc } });
+
+    const claim = await db.claim.create({ data: {
+      timesheetId: ts.id,
+      claimType: "Delivered",
+      supportNumber: appt.sali.supportNumber,
+      quantity: calc.quantity,
+      unitPrice: calc.unitPrice,
+      total: calc.total,
+      exportStatus: "Pending",
+      exportPayload: calc.exportPayload
+    }});
+
+    return Response.json({ timesheet: ts, claim });
+  });
+}
+```
+
+---
+
+## 12) Accessibility & UX Checklist (snippet)
+
+* Logical heading order, skip links, focus visible
+* ARIA roles/labels; form fields with programmatic names/help
+* Min target size 24×24; keyboard paths for all actions
+* Error summaries linked to fields; async status via `aria-live`
+
+---
+
+## 13) Testing & Quality
+811111+/11,+ss+
+811111+/11,+ssSWA++
+* **Unit**: pricing engine, rule combinatorics
+* **Contract**: zod input/output schemas as single source of truth
+* **E2E**: Playwright — onboarding → agreement → timesheet → claim → invoice
+* **Security**: authZ tests per role; snapshots for audit entries
+
+---
+
+## 14) DevOps
+
+* Preview deploys per PR; database migrations gated
+* Blue‑green for workers; feature flags per tenant
+* Backups: PITR on Postgres; object storage lifecycle rules
+
+---
+
+## 15) Next Steps (what I need from you)
+
+1. Paste your **basic imports** (packages, UI kit choices, any pre‑existing components).
+2. Tell me if you prefer **Supabase** (auth/db/storage) or split vendors.
+3. Confirm **claim export** targets for PACE/PRODA formatting.
+4. Any must‑have **NDIS rule edge cases** (e.g., provider travel caps, cancellations, irregular hours).
+
+Once I have those, I’ll generate a repo‑ready scaffold (pages, API routes, Prisma schema, pricing engine stubs) and wire it to your imports.

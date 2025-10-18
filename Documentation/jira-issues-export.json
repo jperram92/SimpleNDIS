@@ -1,0 +1,205 @@
+[
+  {
+    "key": "JNF-20",
+    "id": 10481,
+    "summary": "Define Prisma data model for Participants, Plans, Claims, Timesheets, Invoices",
+    "epic": "JNF-9",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-20"
+  },
+  {
+    "key": "JNF-21",
+    "id": 10482,
+    "summary": "Prisma migrations and seed scripts for initial data",
+    "epic": "JNF-9",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-21"
+  },
+  {
+    "key": "JNF-22",
+    "id": 10483,
+    "summary": "Design system skeleton: colors, typography, tokens, spacing scale",
+    "epic": "JNF-10",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-22"
+  },
+  {
+    "key": "JNF-23",
+    "id": 10484,
+    "summary": "Create an accessible Button and Form control library",
+    "epic": "JNF-10",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-23"
+  },
+  {
+    "key": "JNF-24",
+    "id": 10485,
+    "summary": "AppShell, Header & Sidebar with role nav",
+    "epic": "JNF-10",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-24"
+  },
+  {
+    "key": "JNF-25",
+    "id": 10486,
+    "summary": "Participant registration endpoint & UI",
+    "epic": "JNF-11",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-25"
+  },
+  {
+    "key": "JNF-26",
+    "id": 10487,
+    "summary": "Participant profile & budget summary view",
+    "epic": "JNF-11",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-26"
+  },
+  {
+    "key": "JNF-27",
+    "id": 10488,
+    "summary": "Plan creation API and UI with budget allocation",
+    "epic": "JNF-12",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-27"
+  },
+  {
+    "key": "JNF-28",
+    "id": 10489,
+    "summary": "Plan versioning and change history",
+    "epic": "JNF-12",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-28"
+  },
+  {
+    "key": "JNF-29",
+    "id": 10490,
+    "summary": "Scheduling API with availability and timezone support",
+    "epic": "JNF-13",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-29"
+  },
+  {
+    "key": "JNF-30",
+    "id": 10491,
+    "summary": "Calendar UI and recurring appointment rules",
+    "epic": "JNF-13",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-30"
+  },
+  {
+    "key": "JNF-31",
+    "id": 10492,
+    "summary": "Timesheet submission endpoint & UI",
+    "epic": "JNF-14",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-31"
+  },
+  {
+    "key": "JNF-32",
+    "id": 10493,
+    "summary": "Approvals workflow for timesheets",
+    "epic": "JNF-14",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-32"
+  },
+  {
+    "key": "JNF-33",
+    "id": 10494,
+    "summary": "Claims ingestion and validation pipeline",
+    "epic": "JNF-15",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-33"
+  },
+  {
+    "key": "JNF-34",
+    "id": 10495,
+    "summary": "Invoice generation and export to finance",
+    "epic": "JNF-15",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-34"
+  },
+  {
+    "key": "JNF-35",
+    "id": 10496,
+    "summary": "Payment reconciliation process",
+    "epic": "JNF-15",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-35"
+  },
+  {
+    "key": "JNF-36",
+    "id": 10497,
+    "summary": "Monorepo setup and Turborepo integration",
+    "epic": "JNF-1",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-36"
+  },
+  {
+    "key": "JNF-37",
+    "id": 10498,
+    "summary": "Public API documentation and OpenAPI spec",
+    "epic": "JNF-16",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-37"
+  },
+  {
+    "key": "JNF-38",
+    "id": 10499,
+    "summary": "Set up Vitest unit testing baseline",
+    "epic": "JNF-17",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-38"
+  },
+  {
+    "key": "JNF-39",
+    "id": 10500,
+    "summary": "Playwright E2E test scaffolding",
+    "epic": "JNF-17",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-39"
+  },
+  {
+    "key": "JNF-40",
+    "id": 10501,
+    "summary": "Telemetry: Application Metrics & Tracing",
+    "epic": "JNF-18",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-40"
+  },
+  {
+    "key": "JNF-41",
+    "id": 10502,
+    "summary": "Logging and structured log pipeline",
+    "epic": "JNF-18",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-41"
+  },
+  {
+    "key": "JNF-42",
+    "id": 10503,
+    "summary": "Runbooks for on-call and incident response",
+    "epic": "JNF-19",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-42"
+  },
+  {
+    "key": "JNF-43",
+    "id": 10504,
+    "summary": "Compliance checklist and handover docs",
+    "epic": "JNF-19",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-43"
+  },
+  {
+    "key": "JNF-44",
+    "id": 10505,
+    "summary": "Set up GitHub Actions CI with linting and tests",
+    "epic": "JNF-1",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-44"
+  },
+  {
+    "key": "JNF-45",
+    "id": 10506,
+    "summary": "Define Prisma performance indexes and queries",
+    "epic": "JNF-9",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-45"
+  },
+  {
+    "key": "JNF-46",
+    "id": 10507,
+    "summary": "Form components with Zod validation integration",
+    "epic": "JNF-10",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-46"
+  },
+  {
+    "key": "JNF-47",
+    "id": 10508,
+    "summary": "Project README and onboarding guide",
+    "epic": "JNF-1",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-47"
+  },
+  {
+    "key": "JNF-48",
+    "id": 10509,
+    "summary": "Plan retrospectives and release notes process",
+    "epic": "JNF-12",
+    "url": "https://your-jira-instance.atlassian.net/browse/JNF-48"
+  }
+]
