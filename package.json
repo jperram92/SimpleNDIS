@@ -1,0 +1,34 @@
+{
+  "name": "@ndis/monorepo",
+  "version": "1.0.0",
+  "description": "NDIS Web Application Platform - Monorepo",
+  "private": true,
+  "packageManager": "pnpm@8.15.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test --parallel",
+    "test:coverage": "turbo run test:coverage",
+    "format": "turbo run format",
+    "format:check": "turbo run format:check",
+    "db:migrate": "turbo run db:migrate",
+    "db:seed": "turbo run db:seed",
+    "clean": "turbo run clean && rm -rf node_modules pnpm-lock.yaml",
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install",
+    "changeset": "changeset",
+    "release": "changeset publish"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.16",
+    "typescript": "^5.3.3",
+    "husky": "^8.0.3",
+    "@changesets/cli": "^2.26.2"
+  }
+}
