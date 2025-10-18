@@ -1,0 +1,52 @@
+I need you to review the below, create a task list off each recommendation to ensure you fix it, then go into each story in JIRA via MCP and update it accordingly
+
+Below is a gap analysis against the end-to-end business logic and compliance model you’re targeting (based on the participant → provider → scheduler → finance → compliance flow we discussed earlier).
+
+🧭 1. Participant & Family Experience — Gaps
+Business Logic Area	Missing / Underrepresented Stories	Recommendation
+Participant Consent Lifecycle	You have JNF-110 (Consent capture) but not consent withdrawal or renewal reminders.	Add: “As a participant, I want to withdraw or update my consent so my preferences are always respected.”
+Accessibility & Inclusion	Covered at UI level (JNF-100), but no stories around assistive technologies or Easy Read/Plain English modes.	Add: Story for “Accessible participant portal (screen reader, easy-read format, Auslan video options).”
+Nominee Hierarchies & Delegations	JNF-106 covers basic nominee management; missing power-of-attorney or shared decision controls.	Add: “As a participant, I want to delegate different levels of permission (view only, approve, manage) to my nominee.”
+Plan Upload Verification	You have JNF-111 (Verification) but no explicit OCR / PDF extraction for plan data.	Add: “Automate plan upload parsing (extract budgets/supports).”
+Goal Tracking / Progress Reports	You have JNF-185, but no participant-view feedback loop or sharing mechanism.	Add: “As a participant, I want to view my progress notes and add feedback.”
+Feedback & Complaints (Participant-facing)	Exists at system level (JNF-199), not surfaced in participant portal.	Add: “As a participant, I want to submit a complaint or compliment from my portal.”
+Privacy & Data Access Transparency	JNF-50 and JNF-59 cover policy, but not user access logs.	Add: “As a participant, I want to see when and by whom my data was accessed.”
+👩‍⚕️ 2. Support Worker Experience — Gaps
+Business Logic Area	Missing / Underrepresented Stories	Recommendation
+Travel Claims & Expenses	No explicit story for KM, travel time, or consumables.	Add: “As a support worker, I want to record KM and consumables so I’m reimbursed accurately.”
+Shift Feedback & Handover Notes	You have JNF-161 for service notes but no formal handover flow between workers.	Add: “Enable handover notes between support workers for continuity of care.”
+Fatigue & Compliance Alerts	You have compliance expiry checks (JNF-155-156), but not fatigue rule checks (e.g., >12 hours).	Add: “System prevents scheduling workers beyond fatigue limits.”
+Worker Training & Certification Tracking	Covered in expiry (JNF-156), not in training completions or course tracking.	Add: “Track training modules and completion status.”
+🗓️ 3. Schedulers & Coordinators — Gaps
+Business Logic Area	Missing / Underrepresented Stories	Recommendation
+Multi-Participant Group Activities	You have JNF-180, but no per-participant billing breakdown.	Add: “Automatically apportion group session costs by participant ratio.”
+Waitlist / Vacancy Management	Not covered.	Add: “As a scheduler, I want to manage waitlists and fill cancellations.”
+Geo-based Matching	JNF-178 (intelligent matching) exists but doesn’t specify route/time optimization.	Add: “Optimize scheduling based on proximity and travel time.”
+Unavailability / Leave Management	JNF-165 covers worker availability, not approved leave.	Add: “Allow workers to request and manage leave with approval workflow.”
+Communication Logs	Missing from scheduling.	Add: “Maintain audit of participant/worker scheduling communication.”
+💰 4. Finance & Admin — Gaps
+Business Logic Area	Missing / Underrepresented Stories	Recommendation
+NDIS Bulk Upload Validation (CSV Pre-Check)	JNF-188 covers bulk submission but not pre-validation errors.	Add: “Pre-validate claims against NDIS rules before submission.”
+Plan Manager Integrations	You handle self/NDIS, but not third-party plan manager invoicing APIs.	Add: “Integrate with plan manager portals via standard API.”
+Disputed Claims Workflow	No explicit dispute handling or resubmission story.	Add: “Handle claim rejections, disputes, and resubmissions.”
+Financial Forecasting / Burn Rate	Partial via JNF-144, not full forecasting.	Add: “Predict when participant budgets will deplete based on current trends.”
+Audit Evidence Management	You have JNF-198 (Audit export), but not document-level evidence linking.	Add: “Attach supporting documents for audit evidence to claims or incidents.”
+⚖️ 5. Compliance & Risk — Gaps
+Business Logic Area	Missing / Underrepresented Stories	Recommendation
+Continuous Improvement / Trend Analysis	You have incidents (JNF-149, 184), not analytics.	Add: “Aggregate incidents to identify trends and root causes.”
+Feedback Loop into Risk Register	JNF-199 (Complaints) and JNF-149 (Incidents) aren’t linked to a Risk Register.	Add: “Auto-create risk entries from repeated incident types.”
+Corrective Action Workflow	Missing.	Add: “Track corrective actions and assign follow-ups for non-compliance.”
+Worker & Participant Safety Alerts	No live safety broadcast function.	Add: “Send organization-wide safety alerts to workers.”
+Data Retention & Right-to-Erasure Compliance	You have data retention (JNF-151), but not GDPR/Privacy-Act erasure.	Add: “Participant data deletion workflow after legal retention period.”
+🔐 6. System Architecture & Security — Gaps
+Area	Missing / Underrepresented Stories	Recommendation
+Data Encryption & Key Management	JNF-40 covers review, not encryption at rest or in transit.	Add: “Implement encryption (AES-256, TLS1.3) for sensitive data.”
+Penetration Testing & Vulnerability Scans	Missing.	Add: “Schedule automated penetration testing and vulnerability reporting.”
+Disaster Recovery & Business Continuity	JNF-42 mentions backup but not DR testing.	Add: “Perform and log quarterly DR test cycles.”
+Integration Logging & Monitoring	No story for observability.	Add: “Implement central log aggregation and monitoring (e.g., ELK or CloudWatch).”
+🧩 7. Cross-Functional Enhancements
+Area	Gap	Recommendation
+AI-Driven Assistance	No AI/automation elements (e.g., predictive scheduling, anomaly detection).	Add: “Implement AI insights to predict cancellations and optimize rosters.”
+Data Quality & Stewardship	No stories for duplicate detection or record governance.	Add: “Data quality dashboard and stewardship alerts.”
+Localization & Multi-Region Readiness	Covered partially (JNF-48), but missing for currency/date/time conversions.	Add: “Support multiple currencies/time zones for interstate expansion.”
+Reporting Granularity	You have financial reports (JNF-191), but not compliance or performance dashboards per role.	Add: “Role-based reporting suite (Participant, Provider, Compliance).”
