@@ -1,4 +1,4 @@
 {
-  "extends": ["@ndis/eslint-config", "@typescript-eslint/recommended"],
+  "extends": ["@ndis/eslint-config"],
   "root": true
 }
