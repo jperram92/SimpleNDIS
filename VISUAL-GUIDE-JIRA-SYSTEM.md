@@ -344,7 +344,7 @@ YOU (HUMAN)
 
 GitHub Copilot
     └─ Implements code per system prompt
-       
+
        Uses:
        ├─ TypeScript (Language)
        ├─ Next.js (Framework)

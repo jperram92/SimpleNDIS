@@ -1,6 +1,7 @@
 # NDIS Web Application - Consolidated Implementation Plan
 
 ## Table of Contents
+
 1. [Project Foundation & Infrastructure](#1-project-foundation--infrastructure)
    - 1.1 [Infrastructure Setup](#11-infrastructure-setup)
    - 1.2 [Authentication & Authorization](#12-authentication--authorization)
@@ -40,6 +41,7 @@
 ### 1.1 Infrastructure Setup
 
 #### 1.1.1 Create Monorepo Structure
+
 - Set up a new Git repository
 - Create folder structure:
   ```
@@ -58,6 +60,7 @@
 - Configure TypeScript for monorepo setup
 
 #### 1.1.2 Setup Development Tools
+
 - Install and configure ESLint:
   - TypeScript rules
   - React hooks rules
@@ -76,6 +79,7 @@
   - Test utilities
 
 #### 1.1.3 Configure CI/CD Pipelines
+
 - Set up GitHub Actions workflows:
   ```yaml
   - Build validation
@@ -92,6 +96,7 @@
   - Production
 
 #### 1.1.4 Environment Configuration
+
 - Create .env templates:
   ```
   DATABASE_URL=
@@ -108,6 +113,7 @@
 ### 1.2 Authentication & Authorization
 
 #### 1.2.1 NextAuth.js Integration
+
 ```typescript
 // Authentication configuration
 const authConfig = {
@@ -115,8 +121,8 @@ const authConfig = {
     CredentialsProvider({
       name: 'Email/Password',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       // Credentials validation logic
     }),
@@ -128,33 +134,25 @@ const authConfig = {
     },
     async session({ session, token }) {
       // Session callback implementation
-    }
-  }
+    },
+  },
 };
 
 // Protected API route example
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authConfig);
   if (!session) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: 'Unauthorized' });
   }
   // Route implementation
 }
 ```
 
 #### 1.2.2 RBAC System
+
 ```typescript
 // Role definitions
-type Role =
-  | 'ADMIN'
-  | 'FINANCE'
-  | 'SCHEDULER'
-  | 'SUPPORT_WORKER'
-  | 'PARTICIPANT'
-  | 'NOMINEE';
+type Role = 'ADMIN' | 'FINANCE' | 'SCHEDULER' | 'SUPPORT_WORKER' | 'PARTICIPANT' | 'NOMINEE';
 
 // Permission schema
 interface Permission {
@@ -168,7 +166,7 @@ const rolePermissions: Record<Role, Permission[]> = {
   ADMIN: [{ action: '*', resource: '*' }],
   FINANCE: [
     { action: 'read', resource: 'claims' },
-    { action: 'write', resource: 'invoices' }
+    { action: 'write', resource: 'invoices' },
   ],
   // ... other roles
 };
@@ -187,6 +185,7 @@ const checkPermission = async (
 ### 1.3 Database & Schema
 
 #### 1.3.1 PostgreSQL Setup
+
 ```typescript
 // Database configuration
 const databaseConfig = {
@@ -194,26 +193,27 @@ const databaseConfig = {
     min: 2,
     max: 10,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000
+    connectionTimeoutMillis: 2000,
   },
   replication: {
     read: [
       { host: 'read-replica-1', port: 5432 },
-      { host: 'read-replica-2', port: 5432 }
+      { host: 'read-replica-2', port: 5432 },
     ],
-    write: { host: 'master', port: 5432 }
-  }
+    write: { host: 'master', port: 5432 },
+  },
 };
 
 // Backup strategy
 const backupConfig = {
   frequency: 'DAILY',
   retention: '30DAYS',
-  encryption: true
+  encryption: true,
 };
 ```
 
 #### 1.3.2 Prisma Schema
+
 ```prisma
 model Participant {
   id             String   @id @default(uuid())
@@ -258,13 +258,11 @@ model ServiceAgreement {
 ### 1.4 Core Architecture
 
 #### 1.4.1 API Route Structure
+
 ```typescript
 // Base API handler
 export abstract class BaseApiHandler {
-  protected async withAudit<T>(
-    action: string,
-    handler: () => Promise<T>
-  ): Promise<T> {
+  protected async withAudit<T>(action: string, handler: () => Promise<T>): Promise<T> {
     // Audit logic implementation
     const startTime = Date.now();
     try {
@@ -277,11 +275,7 @@ export abstract class BaseApiHandler {
     }
   }
 
-  private async logAudit(
-    action: string,
-    status: 'SUCCESS' | 'ERROR',
-    error?: any
-  ) {
+  private async logAudit(action: string, status: 'SUCCESS' | 'ERROR', error?: any) {
     // Audit logging implementation
   }
 }
@@ -303,6 +297,7 @@ export class TimesheetApi extends BaseApiHandler {
 ### 2.1 Component Library
 
 #### 2.1.1 Design System Configuration
+
 ```typescript
 // tailwind.config.js
 module.exports = {
@@ -321,24 +316,22 @@ module.exports = {
         },
         accent: {
           // Accent color palette
-        }
+        },
       },
       spacing: {
         // Custom spacing scale
       },
       borderRadius: {
         // Custom border radius scale
-      }
-    }
+      },
+    },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography')
-  ]
-}
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+};
 ```
 
 #### 2.1.2 Base Components
+
 ```typescript
 // Button Component
 interface ButtonProps {
@@ -399,6 +392,7 @@ const FormField: React.FC<FormFieldProps> = ({
 ### 2.2 Layout Components
 
 #### 2.2.1 App Shell
+
 ```typescript
 interface AppShellProps {
   user: User;
@@ -431,6 +425,7 @@ const AppShell: React.FC<AppShellProps> = ({
 ### 3.1 Participant Core Features
 
 #### 3.1.1 Participant Registration Flow
+
 ```typescript
 interface RegistrationDTO {
   personalInfo: {
@@ -479,6 +474,7 @@ class ParticipantService {
 ```
 
 ### 3.2 Plan & Budget Management
+
 ```typescript
 interface PlanDetails {
   id: string;
@@ -518,6 +514,7 @@ class BudgetTrackingService {
 ### 4.1 Scheduling System
 
 #### 4.1.1 Calendar Management
+
 ```typescript
 interface SchedulerConfig {
   view: 'day' | 'week' | 'month';
@@ -557,6 +554,7 @@ class SchedulingService {
 ```
 
 ### 4.2 Timesheet Management
+
 ```typescript
 interface TimesheetEntry {
   appointmentId: string;
@@ -588,6 +586,7 @@ class TimesheetProcessor {
 ## 5. Claims & Finance
 
 ### 5.1 Claims Processing
+
 ```typescript
 interface ClaimDTO {
   id: string;
@@ -621,6 +620,7 @@ class ClaimsService {
 ```
 
 ### 5.2 Financial Management
+
 ```typescript
 interface Invoice {
   id: string;
@@ -651,6 +651,7 @@ class FinancialReportingService {
 ## 6. Platform Optimization
 
 ### 6.1 Performance Optimization
+
 ```typescript
 interface CacheConfig {
   strategy: 'memory' | 'redis' | 'hybrid';
@@ -678,6 +679,7 @@ class CachingService {
 ```
 
 ### 6.2 Security Implementation
+
 ```typescript
 interface SecurityConfig {
   auth: {
@@ -694,14 +696,10 @@ interface SecurityConfig {
 
 // Security service
 class SecurityService {
-  async validateRequest(
-    req: Request,
-    resource: string,
-    action: string
-  ): Promise<boolean> {
+  async validateRequest(req: Request, resource: string, action: string): Promise<boolean> {
     const session = await this.getSession(req);
     if (!session) return false;
-    
+
     const user = session.user;
     return this.checkPermission(user, resource, action);
   }
@@ -711,6 +709,7 @@ class SecurityService {
 ## 7. Testing Strategy
 
 ### 7.1 Unit Testing
+
 ```typescript
 describe('Claims Processing', () => {
   let claimsService: ClaimsService;
@@ -727,24 +726,23 @@ describe('Claims Processing', () => {
 
   it('should reject invalid claims', async () => {
     const invalidClaim = mockInvalidClaimData();
-    await expect(
-      claimsService.validateClaim(invalidClaim)
-    ).rejects.toThrow(ClaimValidationError);
+    await expect(claimsService.validateClaim(invalidClaim)).rejects.toThrow(ClaimValidationError);
   });
 });
 ```
 
 ### 7.2 Integration Testing
+
 ```typescript
 describe('End-to-end Claims Flow', () => {
   it('should process claim and generate invoice', async () => {
     // Given
     const claim = await createClaim(mockClaimData());
-    
+
     // When
     const processedClaim = await processClaim(claim);
     const invoice = await generateInvoice(processedClaim);
-    
+
     // Then
     expect(invoice).toHaveProperty('id');
     expect(invoice.status).toBe('PENDING');
@@ -756,6 +754,7 @@ describe('End-to-end Claims Flow', () => {
 ## 8. Deployment & Operations
 
 ### 8.1 Infrastructure Setup
+
 ```typescript
 interface DeploymentConfig {
   environment: 'development' | 'staging' | 'production';
@@ -786,6 +785,7 @@ class DeploymentService {
 ```
 
 ### 8.2 CI/CD Pipeline
+
 ```yaml
 name: NDIS Platform CI/CD
 
@@ -822,6 +822,7 @@ jobs:
 ## 9. Documentation & Training
 
 ### 9.1 Technical Documentation
+
 - API Documentation
 - Database Schema Documentation
 - Architecture Documentation
@@ -832,6 +833,7 @@ jobs:
 - Performance Optimization Guide
 
 ### 9.2 User Documentation
+
 - User Manuals
 - Quick Start Guides
 - Video Tutorials
@@ -840,6 +842,7 @@ jobs:
 - Best Practices Guide
 
 ### 9.3 Training Materials
+
 - Onboarding Documentation
 - Role-specific Training Modules
 - System Administration Guide
@@ -849,6 +852,7 @@ jobs:
 ## 10. Maintenance & Support
 
 ### 10.1 Support System
+
 ```typescript
 interface SupportTicket {
   id: string;
@@ -875,10 +879,7 @@ class SupportService {
     return created;
   }
 
-  async updateTicket(
-    id: string,
-    updates: Partial<SupportTicket>
-  ): Promise<SupportTicket> {
+  async updateTicket(id: string, updates: Partial<SupportTicket>): Promise<SupportTicket> {
     const ticket = await this.findTicket(id);
     const updated = await this.applyUpdates(ticket, updates);
     await this.notifyParties(updated);
@@ -888,6 +889,7 @@ class SupportService {
 ```
 
 ### 10.2 Monitoring & Updates
+
 ```typescript
 interface MonitoringSystem {
   metrics: {

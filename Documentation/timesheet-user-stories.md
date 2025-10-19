@@ -5,6 +5,7 @@ Epic: JNF-14
 Purpose: Implement timesheet submission, review and approval workflow, approval notifications, and linkage to claims.
 
 Source:
+
 - Documentation/ultimate-implementation-part2.md (TimesheetService)
 - Documentation/IMPLEMENTATION-INDEX.md (Timesheets API)
 
@@ -76,6 +77,7 @@ Stories:
    - GitHub Actions config includes migration step and seeds for timesheet tests.
 
 Runbook/Notes:
+
 - Use TimesheetService.createTimesheet, submitTimesheet, approveTimesheet from docs as reference implementations.
 - Approval should be idempotent and guarded: only submitted timesheets may be approved/rejected.
 

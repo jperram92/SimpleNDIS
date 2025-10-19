@@ -12,7 +12,8 @@
     "db:seed": "node prisma/seed.js",
     "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\""
   },
   "dependencies": {
     "@prisma/client": "^5.7.0"

@@ -9,9 +9,11 @@ I have created a complete **JIRA User Story Actioning System** - a comprehensive
 ## 📄 Three Core Documents
 
 ### 1. **JIRA-USER-STORY-SYSTEM-PROMPT.md** (Main Document)
+
 **The Complete System Prompt** - 11 phases of structured workflow
 
 **Contents:**
+
 - Executive overview
 - All 11 phases with detailed instructions
 - Phase templates for each stage
@@ -23,6 +25,7 @@ I have created a complete **JIRA User Story Actioning System** - a comprehensive
 **Best for:** Understanding complete workflow, reference during work
 
 **Key Sections:**
+
 ```
 Phase 1: User Story Selection & Confirmation
 Phase 2: Branch Creation (feature/JNF-XX)
@@ -40,9 +43,11 @@ Phase 11: Completion & Ticket Closure
 ---
 
 ### 2. **QUICK-REFERENCE-JIRA-WORKFLOW.md** (Reference Guide)
+
 **Quick Lookup Guide** - Templates and commands
 
 **Contents:**
+
 - Phase workflow diagram (visual)
 - Templates for each phase
 - Essential Git commands
@@ -55,6 +60,7 @@ Phase 11: Completion & Ticket Closure
 **Best for:** Quick lookups while working, finding templates
 
 **Includes:**
+
 - All 8 phase templates
 - Command cheat sheet
 - Decision tree flowchart
@@ -63,9 +69,11 @@ Phase 11: Completion & Ticket Closure
 ---
 
 ### 3. **ACTIVATION-GUIDE-JIRA-SYSTEM.md** (Getting Started)
+
 **Onboarding & Quick Start** - How to activate and use
 
 **Contents:**
+
 - 5-minute quick start
 - What happens in each phase
 - How to use the system (conversation flow)
@@ -78,6 +86,7 @@ Phase 11: Completion & Ticket Closure
 **Best for:** First-time users, onboarding, FAQ reference
 
 **Includes:**
+
 - Example full workflow conversation
 - Learning progression (beginner → experienced)
 - Technical requirements
@@ -156,41 +165,48 @@ REQUEST REVIEW → Back to Phase 4 (Deeper Research)
 ## 📋 Key Features
 
 ### ✅ Comprehensive Planning
+
 - Story breakdown with objectives, components, dependencies
 - Detailed action list with effort estimates
 - Risk identification and mitigation
 
 ### ✅ Research-First Approach
+
 - Automatic documentation review
 - Google search capability
 - NDIS-specific research
 - Context gathering before development
 
 ### ✅ JIRA Integration
+
 - Auto-update ticket with methodology
 - Comment with plan before development
 - Update status during workflow
 - Final completion documentation
 
 ### ✅ Git & GitHub Workflow
+
 - Feature branch naming: `feature/JNF-XX`
 - Small, focused commits
 - Pull request creation
 - CI/CD integration
 
 ### ✅ Quality Assurance
+
 - Unit testing before approval
 - Manual verification of acceptance criteria
 - TypeScript, ESLint, Prettier checks
 - Test coverage reporting
 
 ### ✅ User Control
+
 - Approval gates at key phases
 - Request changes capability
 - Request review option
 - Feedback incorporation
 
 ### ✅ Documentation & Templates
+
 - Template for each phase
 - Command reference
 - Decision trees
@@ -203,11 +219,13 @@ REQUEST REVIEW → Back to Phase 4 (Deeper Research)
 ### To Action a User Story:
 
 **Step 1:** Say to GitHub Copilot
+
 ```
 I want to action user story JNF-25: Participant registration endpoint & UI
 ```
 
 **Step 2:** Confirm when asked
+
 ```
 YES
 ```
@@ -215,6 +233,7 @@ YES
 **Step 3:** Follow the system through all 11 phases
 
 **Step 4:** At Phase 8, choose:
+
 - ✅ APPROVE → Proceed to GitHub
 - ❌ REQUEST CHANGES → Go back and refine
 - 🔍 REQUEST REVIEW → Get deeper analysis
@@ -228,45 +247,49 @@ YES
 
 ## 📊 Phases at a Glance
 
-| Phase | Time | Action | Decision |
-|-------|------|--------|----------|
-| 1 | 30s | Present story | YES / NO |
-| 2 | 30s | Create branch | Continue |
-| 3 | 15m | Analyze story | Continue |
-| 4 | 30m | Research docs | Continue |
-| 5 | 5m | Update JIRA | Continue |
-| 6 | 2-8h | Develop | Manual review |
-| 7 | 30m | Test | Continue if pass |
-| 8 | - | Request approval | Approve/Change/Review/Feedback |
-| 9 | 5m | Commit & PR | Await CI/CD |
-| 10 | 2-24h | Await merge | AI monitors |
-| 11 | 5m | Complete | Ticket closed |
+| Phase | Time  | Action           | Decision                       |
+| ----- | ----- | ---------------- | ------------------------------ |
+| 1     | 30s   | Present story    | YES / NO                       |
+| 2     | 30s   | Create branch    | Continue                       |
+| 3     | 15m   | Analyze story    | Continue                       |
+| 4     | 30m   | Research docs    | Continue                       |
+| 5     | 5m    | Update JIRA      | Continue                       |
+| 6     | 2-8h  | Develop          | Manual review                  |
+| 7     | 30m   | Test             | Continue if pass               |
+| 8     | -     | Request approval | Approve/Change/Review/Feedback |
+| 9     | 5m    | Commit & PR      | Await CI/CD                    |
+| 10    | 2-24h | Await merge      | AI monitors                    |
+| 11    | 5m    | Complete         | Ticket closed                  |
 
 ---
 
 ## 💡 Key Benefits
 
 ### For Development Teams:
+
 ✅ **Consistent workflow** - Same process every story  
 ✅ **Documentation trail** - JIRA comments track methodology  
 ✅ **Quality gates** - Testing and approval before merge  
-✅ **Audit trail** - Git commits show all changes  
+✅ **Audit trail** - Git commits show all changes
 
 ### For Project Managers:
+
 ✅ **Status visibility** - JIRA updated at each phase  
 ✅ **Effort estimation** - Action list provides time estimates  
 ✅ **Risk identification** - Risks noted before development  
-✅ **Completion tracking** - Clear completion reports  
+✅ **Completion tracking** - Clear completion reports
 
 ### For QA/Testing:
+
 ✅ **Test verification** - Acceptance criteria checked in Phase 7  
 ✅ **Test data** - Manual verification documented  
-✅ **Coverage tracking** - Test coverage reported  
+✅ **Coverage tracking** - Test coverage reported
 
 ### For DevOps:
+
 ✅ **CI/CD integration** - Automated pipeline checks  
 ✅ **PR review** - Complete PR with context  
-✅ **Deployment ready** - Code ready for production  
+✅ **Deployment ready** - Code ready for production
 
 ---
 
@@ -309,17 +332,20 @@ After implementing a story with this system:
 ## 🔧 What You Can Do Now
 
 ### Immediate:
+
 1. Read **ACTIVATION-GUIDE-JIRA-SYSTEM.md** (5 min)
 2. Pick a JIRA ticket
 3. Say: "I want to action user story JNF-XX: [Title]"
 
 ### Before First Story:
+
 1. Review **QUICK-REFERENCE-JIRA-WORKFLOW.md** (10 min)
 2. Make sure Git is configured
 3. Ensure pnpm, Node.js, PostgreSQL are installed
 4. Have JIRA account ready
 
 ### For Deep Understanding:
+
 1. Read **JIRA-USER-STORY-SYSTEM-PROMPT.md** (30 min)
 2. Review all templates
 3. Study the workflow diagram
@@ -332,17 +358,20 @@ After implementing a story with this system:
 ### For Your Team:
 
 **Day 1 - Onboarding (1 hour):**
+
 1. Everyone reads **ACTIVATION-GUIDE-JIRA-SYSTEM.md** (5 min)
 2. Team lead presents workflow (30 min)
 3. Q&A (15 min)
 4. Setup checklist (10 min)
 
 **Day 2 - First Story (varies):**
+
 1. Team member actions first story (1-8 hours)
 2. Get feedback from team lead
 3. Deploy to production
 
 **Day 3+ - Refinement:**
+
 1. Action next story
 2. Iterate and improve process
 3. Share learnings with team
@@ -352,6 +381,7 @@ After implementing a story with this system:
 ## 🔄 Process Customization
 
 ### You Can Adapt:
+
 - ✅ Phase duration estimates
 - ✅ Testing requirements
 - ✅ Documentation depth
@@ -360,6 +390,7 @@ After implementing a story with this system:
 - ✅ Commit message format
 
 ### Should Keep:
+
 - ✅ 11-phase structure (proven effective)
 - ✅ User approval gates
 - ✅ Testing before approval
@@ -459,11 +490,13 @@ A: In Phase 8, choose "REQUEST REVIEW" for deeper analysis.
 ## 🎁 What's Included
 
 ### Documents:
+
 - ✅ **JIRA-USER-STORY-SYSTEM-PROMPT.md** - 15+ KB system prompt
 - ✅ **QUICK-REFERENCE-JIRA-WORKFLOW.md** - 8+ KB reference guide
 - ✅ **ACTIVATION-GUIDE-JIRA-SYSTEM.md** - 10+ KB getting started guide
 
 ### Templates (Included in documents):
+
 - ✅ Story presentation template
 - ✅ Story breakdown template
 - ✅ Action list template
@@ -476,6 +509,7 @@ A: In Phase 8, choose "REQUEST REVIEW" for deeper analysis.
 - ✅ Completion report template
 
 ### Reference Materials:
+
 - ✅ Phase workflow diagram
 - ✅ Decision trees
 - ✅ Command reference
@@ -513,29 +547,31 @@ A: In Phase 8, choose "REQUEST REVIEW" for deeper analysis.
 
 ## 📊 System Summary
 
-| Aspect | Details |
-|--------|---------|
-| **Phases** | 11 structured phases |
-| **Decision Points** | 5 user control gates |
-| **Templates** | 10+ phase templates |
-| **Flexibility** | Full loop-back capability |
-| **Control** | User decides approval |
-| **Automation** | AI handles implementation |
-| **Tracking** | JIRA + Git audit trail |
-| **Quality Gates** | Testing + approval |
-| **Time per Story** | 1-8 hours (depends on complexity) |
-| **Ready to Use** | Yes ✅ |
+| Aspect              | Details                           |
+| ------------------- | --------------------------------- |
+| **Phases**          | 11 structured phases              |
+| **Decision Points** | 5 user control gates              |
+| **Templates**       | 10+ phase templates               |
+| **Flexibility**     | Full loop-back capability         |
+| **Control**         | User decides approval             |
+| **Automation**      | AI handles implementation         |
+| **Tracking**        | JIRA + Git audit trail            |
+| **Quality Gates**   | Testing + approval                |
+| **Time per Story**  | 1-8 hours (depends on complexity) |
+| **Ready to Use**    | Yes ✅                            |
 
 ---
 
 ## 🎓 Learning Resources
 
 ### In This Package:
+
 1. **ACTIVATION-GUIDE-JIRA-SYSTEM.md** - Start here
 2. **QUICK-REFERENCE-JIRA-WORKFLOW.md** - Reference while working
 3. **JIRA-USER-STORY-SYSTEM-PROMPT.md** - Deep dive
 
 ### In Project Documentation:
+
 1. **COMPLETE-SUMMARY.md** - Project overview
 2. **IMPLEMENTATION-INDEX.md** - Technical reference
 3. **ultimate-detailed-implementation.md** - Implementation patterns
@@ -546,6 +582,7 @@ A: In Phase 8, choose "REQUEST REVIEW" for deeper analysis.
 ## 🏆 Success Stories
 
 The system is designed to support:
+
 - ✅ Beginner developers (guided step-by-step)
 - ✅ Experienced developers (streamlined process)
 - ✅ Remote teams (async-friendly)
@@ -580,6 +617,7 @@ You now have a **complete, production-ready system** for actioning JIRA user sto
 ### To Start:
 
 **Say to GitHub Copilot:**
+
 ```
 I want to action user story [JNF-XX]: [Story Title]
 ```

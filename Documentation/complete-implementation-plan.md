@@ -1,6 +1,7 @@
 # NDIS Web Application - Complete Implementation Plan
 
 ## Table of Contents
+
 1. [Project Foundation & Infrastructure](#1-project-foundation--infrastructure)
 2. [User Interface Foundation](#2-user-interface-foundation)
 3. [Participant Management](#3-participant-management)
@@ -13,6 +14,7 @@
 ### 1.1 Infrastructure Setup
 
 #### 1.1.1 Create Monorepo Structure
+
 - Set up a new Git repository
 - Create folder structure:
   ```
@@ -31,6 +33,7 @@
 - Configure TypeScript for monorepo setup
 
 #### 1.1.2 Setup Development Tools
+
 - Install and configure ESLint:
   - TypeScript rules
   - React hooks rules
@@ -49,6 +52,7 @@
   - Test utilities
 
 #### 1.1.3 Configure CI/CD Pipelines
+
 - Set up GitHub Actions workflows:
   ```yaml
   - Build validation
@@ -65,6 +69,7 @@
   - Production
 
 #### 1.1.4 Environment Configuration
+
 - Create .env templates:
   ```
   DATABASE_URL=
@@ -79,6 +84,7 @@
 - Document all environment variables
 
 #### 1.1.5 Initialize Next.js Project
+
 - Create Next.js 14+ project with App Router
 - Configure TypeScript with strict mode
 - Set up path aliases
@@ -87,6 +93,7 @@
 ### 1.2 Authentication & Authorization
 
 #### 1.2.1 NextAuth.js Integration
+
 - Install NextAuth.js
 - Configure authentication providers:
   ```typescript
@@ -98,6 +105,7 @@
 - Implement refresh token logic
 
 #### 1.2.2 JWT Token Handling
+
 - Configure JWT settings:
   ```typescript
   {
@@ -111,15 +119,10 @@
 - Add token validation middleware
 
 #### 1.2.3 RBAC System
+
 ```typescript
 // Role definitions
-type Role =
-  | 'ADMIN'
-  | 'FINANCE'
-  | 'SCHEDULER'
-  | 'SUPPORT_WORKER'
-  | 'PARTICIPANT'
-  | 'NOMINEE';
+type Role = 'ADMIN' | 'FINANCE' | 'SCHEDULER' | 'SUPPORT_WORKER' | 'PARTICIPANT' | 'NOMINEE';
 
 // Permission schema
 interface Permission {
@@ -130,9 +133,15 @@ interface Permission {
 
 // Role permissions mapping
 const rolePermissions: Record<Role, Permission[]> = {
-  ADMIN: [/* full access */],
-  FINANCE: [/* financial permissions */],
-  SCHEDULER: [/* scheduling permissions */],
+  ADMIN: [
+    /* full access */
+  ],
+  FINANCE: [
+    /* financial permissions */
+  ],
+  SCHEDULER: [
+    /* scheduling permissions */
+  ],
   // ... other roles
 };
 ```
@@ -140,29 +149,31 @@ const rolePermissions: Record<Role, Permission[]> = {
 ### 1.3 Database & Schema
 
 #### 1.3.1 PostgreSQL Setup
+
 ```typescript
 // Database configuration
 const databaseConfig = {
   connectionPool: {
     min: 2,
     max: 10,
-    idle: 10000
+    idle: 10000,
   },
   ssl: {
     rejectUnauthorized: false,
-    ca: process.env.DB_CA_CERT
-  }
+    ca: process.env.DB_CA_CERT,
+  },
 };
 
 // Backup strategy
 const backupConfig = {
   frequency: 'DAILY',
   retention: '30_DAYS',
-  encryption: true
+  encryption: true,
 };
 ```
 
 #### 1.3.2 Prisma Schema
+
 ```prisma
 model Participant {
   id             String   @id @default(uuid())
@@ -206,6 +217,7 @@ model ServiceAgreement {
 ### 2.1 Component Library
 
 #### 2.1.1 Base Components
+
 ```typescript
 // Button Component
 interface ButtonProps {
@@ -216,13 +228,7 @@ interface ButtonProps {
   children: React.ReactNode;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  variant,
-  size,
-  loading,
-  disabled,
-  children
-}) => {
+const Button: React.FC<ButtonProps> = ({ variant, size, loading, disabled, children }) => {
   // Implementation
 };
 
@@ -235,13 +241,7 @@ interface FormFieldProps {
   children: React.ReactNode;
 }
 
-const FormField: React.FC<FormFieldProps> = ({
-  label,
-  error,
-  required,
-  description,
-  children
-}) => {
+const FormField: React.FC<FormFieldProps> = ({ label, error, required, description, children }) => {
   // Implementation
 };
 ```
@@ -249,6 +249,7 @@ const FormField: React.FC<FormFieldProps> = ({
 ### 2.2 Layout Components
 
 #### 2.2.1 App Shell
+
 ```typescript
 interface AppShellProps {
   user: User;
@@ -279,6 +280,7 @@ const AppShell: React.FC<AppShellProps> = ({
 ### 3.1 Participant Registration
 
 #### 3.1.1 Registration Flow
+
 ```typescript
 interface RegistrationForm {
   step1: PersonalDetails;
@@ -301,6 +303,7 @@ const registrationSchema = z.object({
 ### 3.2 Plan Management
 
 #### 3.2.1 Budget Tracking
+
 ```typescript
 interface BudgetDetails {
   total: number;
@@ -317,6 +320,7 @@ const BudgetTracker: React.FC<{ planId: string }> = ({ planId }) => {
 ## 4. Scheduling & Timesheets
 
 ### 4.1 Calendar System
+
 ```typescript
 interface CalendarEvent {
   id: string;
@@ -334,6 +338,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
 ```
 
 ### 4.2 Timesheet Management
+
 ```typescript
 interface TimesheetEntry {
   date: Date;
@@ -352,6 +357,7 @@ const TimesheetForm: React.FC = () => {
 ## 5. Claims & Finance
 
 ### 5.1 Claims Processing
+
 ```typescript
 interface Claim {
   id: string;
@@ -370,11 +376,12 @@ const ClaimProcessor = {
   },
   submit: async (claim: Claim): Promise<SubmissionResult> => {
     // Implementation
-  }
+  },
 };
 ```
 
 ### 5.2 Invoice Generation
+
 ```typescript
 interface Invoice {
   id: string;
@@ -387,13 +394,14 @@ interface Invoice {
 const InvoiceGenerator = {
   createPDF: async (invoice: Invoice): Promise<Buffer> => {
     // Implementation using PDF generation library
-  }
+  },
 };
 ```
 
 ## 6. Platform Optimization
 
 ### 6.1 Performance Monitoring
+
 ```typescript
 interface PerformanceMetrics {
   ttfb: number;
@@ -409,11 +417,12 @@ const performanceMonitor = {
   },
   report: async (metrics: PerformanceMetrics): Promise<void> => {
     // Implementation
-  }
+  },
 };
 ```
 
 ### 6.2 Security Implementation
+
 ```typescript
 interface SecurityConfig {
   rateLimit: {
@@ -438,6 +447,7 @@ const securityMiddleware = {
 ## Testing Strategy
 
 ### Unit Tests
+
 ```typescript
 describe('Claim Calculation', () => {
   test('calculates correct amount for standard hours', () => {
@@ -451,6 +461,7 @@ describe('Claim Calculation', () => {
 ```
 
 ### Integration Tests
+
 ```typescript
 describe('Timesheet Workflow', () => {
   test('complete timesheet submission process', async () => {
@@ -460,6 +471,7 @@ describe('Timesheet Workflow', () => {
 ```
 
 ### E2E Tests
+
 ```typescript
 test('participant registration flow', async ({ page }) => {
   // Playwright test implementation
@@ -469,6 +481,7 @@ test('participant registration flow', async ({ page }) => {
 ## Deployment Strategy
 
 ### CI/CD Pipeline
+
 ```yaml
 name: Deploy
 on:
@@ -483,6 +496,7 @@ jobs:
 ```
 
 ### Monitoring Setup
+
 ```typescript
 interface MonitoringConfig {
   metrics: {
@@ -499,6 +513,7 @@ interface MonitoringConfig {
 ## Documentation
 
 ### API Documentation
+
 ```typescript
 /**
  * @api {post} /api/timesheets Create Timesheet
@@ -509,6 +524,7 @@ interface MonitoringConfig {
 ```
 
 ### User Documentation
+
 - System requirements
 - Installation guide
 - User guides for each role
@@ -518,18 +534,21 @@ interface MonitoringConfig {
 ## Maintenance Plan
 
 ### Database Maintenance
+
 - Regular backups
 - Index optimization
 - Query performance monitoring
 - Data archival strategy
 
 ### Security Updates
+
 - Regular dependency updates
 - Security patch management
 - Vulnerability scanning
 - Incident response plan
 
 ### Performance Optimization
+
 - Regular performance audits
 - Load testing
 - Optimization strategies
@@ -538,12 +557,14 @@ interface MonitoringConfig {
 ## Risk Management
 
 ### Identified Risks
+
 1. Data security breaches
 2. System performance issues
 3. Compliance violations
 4. Integration failures
 
 ### Mitigation Strategies
+
 - Regular security audits
 - Performance monitoring
 - Compliance checks
@@ -552,11 +573,13 @@ interface MonitoringConfig {
 ## Success Metrics
 
 ### Performance Metrics
+
 - Response time < 200ms
 - Uptime > 99.9%
 - Error rate < 0.1%
 
 ### Business Metrics
+
 - User adoption rate
 - Claim processing time
 - Support ticket volume
@@ -564,11 +587,13 @@ interface MonitoringConfig {
 ## Future Considerations
 
 ### Scalability
+
 - Horizontal scaling strategy
 - Database sharding plan
 - Caching strategy
 
 ### Feature Roadmap
+
 - Multi-tenancy support
 - Advanced reporting
 - Mobile application

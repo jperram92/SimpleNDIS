@@ -84,6 +84,7 @@ Example: `feat: add user authentication`
 ### Pre-commit Hooks
 
 Pre-commit hooks are automatically installed and will run:
+
 - ESLint linting
 - TypeScript type checking
 
