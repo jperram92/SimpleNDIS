@@ -6,22 +6,29 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/explicit-function-return-types': 'warn',
   },
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
-      extends: [
-        'plugin:@typescript-eslint/recommended',
-        'plugin:react/recommended',
-        'plugin:react-hooks/recommended',
-      ],
+      parserOptions: {
+        project: true,
+      },
       plugins: ['@typescript-eslint', 'react', 'react-hooks'],
       rules: {
+        // Basic TypeScript rules
         '@typescript-eslint/no-explicit-any': 'warn',
-        '@typescript-eslint/explicit-function-return-types': 'warn',
+        '@typescript-eslint/no-unused-vars': 'error',
+        '@typescript-eslint/no-array-constructor': 'error',
+        '@typescript-eslint/prefer-as-const': 'error',
+        '@typescript-eslint/no-non-null-assertion': 'error',
+        // React rules
         'react/react-in-jsx-scope': 'off',
         'react/prop-types': 'off',
+        'react/jsx-uses-react': 'error',
+        'react/jsx-uses-vars': 'error',
+        // React hooks rules
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'warn',
       },
       settings: {
         react: {
