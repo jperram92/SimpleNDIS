@@ -11,18 +11,21 @@ The `JIRA-USER-STORY-SYSTEM-PROMPT.md` has been updated to include **full JIRA M
 ### ✅ Phase 1: Automatic JIRA MCP Fetch
 
 **What Changed:**
+
 - Added Step 1.1: "Fetch Ticket via JIRA MCP"
 - System now automatically calls `mcp_atlassian_getJiraIssue()` when you say "I want to action JNF-2"
 - Fetches real ticket data from your JIRA instance
 - Displays actual acceptance criteria, priority, epic, description
 
 **Before:**
+
 ```
 You said: "I want to action user story JNF-2"
 System: "What story details should I use?"
 ```
 
 **After:**
+
 ```
 You say: "I want to action user story JNF-2"
 System: Calls JIRA MCP → Fetches JNF-2 from JIRA
@@ -34,6 +37,7 @@ System: Displays real ticket with actual acceptance criteria
 ### ✅ Phase 5: JIRA MCP Update (Before Development)
 
 **What Changed:**
+
 - Added explicit JIRA MCP integration
 - System automatically calls:
   - `mcp_atlassian_addCommentToJiraIssue()` - Posts methodology comment
@@ -41,6 +45,7 @@ System: Displays real ticket with actual acceptance criteria
   - `mcp_atlassian_editJiraIssue()` - Links related issues (optional)
 
 **What Gets Posted to JIRA Automatically:**
+
 ```
 🚀 Development Started: [Date & Time]
 👤 Developer: [Team Member]
@@ -58,12 +63,14 @@ System: Displays real ticket with actual acceptance criteria
 ### ✅ Phase 10: JIRA MCP PR Status Update
 
 **What Changed:**
+
 - Added explicit JIRA MCP integration
 - System automatically calls:
   - `mcp_atlassian_addCommentToJiraIssue()` - Posts PR details and testing results
   - `mcp_atlassian_transitionJiraIssue()` - Changes status to "In Review"
 
 **What Gets Posted to JIRA Automatically:**
+
 ```
 ✅ Development Complete - Pull Request Created
 
@@ -82,6 +89,7 @@ System: Displays real ticket with actual acceptance criteria
 ### ✅ Phase 11: JIRA MCP Ticket Closure
 
 **What Changed:**
+
 - Added explicit JIRA MCP integration
 - System automatically calls:
   - `mcp_atlassian_addCommentToJiraIssue()` - Posts completion summary
@@ -89,6 +97,7 @@ System: Displays real ticket with actual acceptance criteria
   - `mcp_atlassian_editJiraIssue()` - Sets resolution to "Fixed"
 
 **What Gets Posted to JIRA Automatically:**
+
 ```
 🎉 User Story Successfully Completed & Merged to Production
 
@@ -135,6 +144,7 @@ JIRA TICKET JNF-2:
 ## 📊 MCP Calls Per Phase
 
 ### Phase 1: Get Ticket Data
+
 ```javascript
 mcp_atlassian_getJiraIssue(
   cloudId: "your-cloud-id",
@@ -144,6 +154,7 @@ mcp_atlassian_getJiraIssue(
 ```
 
 ### Phase 5: Add Development Comment & Update Status
+
 ```javascript
 mcp_atlassian_addCommentToJiraIssue(
   cloudId: "your-cloud-id",
@@ -159,6 +170,7 @@ mcp_atlassian_transitionJiraIssue(
 ```
 
 ### Phase 10: Add PR Comment & Update Status
+
 ```javascript
 mcp_atlassian_addCommentToJiraIssue(
   cloudId: "your-cloud-id",
@@ -174,6 +186,7 @@ mcp_atlassian_transitionJiraIssue(
 ```
 
 ### Phase 11: Add Completion Comment & Close
+
 ```javascript
 mcp_atlassian_addCommentToJiraIssue(
   cloudId: "your-cloud-id",
@@ -199,11 +212,13 @@ mcp_atlassian_editJiraIssue(
 ## 🎯 How to Use Updated System
 
 ### Setup (One Time)
+
 1. Get your JIRA Cloud ID (e.g., from URL: `https://yoursite.atlassian.net/`)
 2. Ensure you have JIRA API access
 3. Load the updated `JIRA-USER-STORY-SYSTEM-PROMPT.md` into GitHub Copilot
 
 ### Per Ticket
+
 1. Say: "I want to action user story JNF-2"
 2. System fetches real ticket via MCP
 3. You confirm: YES
@@ -218,22 +233,26 @@ mcp_atlassian_editJiraIssue(
 ### Automatic JIRA Updates at 4 Key Points:
 
 **Phase 1:** ✅ Fetches real ticket data
+
 - No manual copy-paste needed
 - Real acceptance criteria displayed
 - Actual priority and epic shown
 
 **Phase 5:** ✅ Posts methodology comment
+
 - Documents analysis complete
 - Shows action list
 - Posts research findings
 - Status updated to "In Development"
 
 **Phase 10:** ✅ Posts PR details
+
 - Shares PR link in JIRA
 - Shows test results
 - Status updated to "In Review"
 
 **Phase 11:** ✅ Posts completion & closes ticket
+
 - Final summary posted
 - Metrics included
 - Status updated to "Done"
@@ -247,7 +266,7 @@ mcp_atlassian_editJiraIssue(
 ✅ JIRA API access configured  
 ✅ Project key correct (JNF for SimpleNDIS)  
 ✅ User has permission to update tickets  
-✅ Atlassian MCP tools activated  
+✅ Atlassian MCP tools activated
 
 ---
 
@@ -260,6 +279,7 @@ I want to action user story JNF-2
 ```
 
 The system will:
+
 1. Automatically fetch JNF-2 from JIRA ✅
 2. Present real ticket data ✅
 3. Update JIRA throughout the workflow ✅
@@ -282,4 +302,3 @@ The system will:
 **Status:** ✅ JIRA MCP Integration Complete  
 **Version:** 2.0 (Updated with MCP)  
 **Last Updated:** October 19, 2025
-

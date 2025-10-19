@@ -49,6 +49,7 @@ User says: "I want to action user story JNF-25"
 ## 📋 Phase Templates
 
 ### PHASE 1: User Story Presentation
+
 ```
 📌 PRESENTING USER STORY FOR ACTIONING
 Ticket: [ID]
@@ -63,6 +64,7 @@ Acceptance Criteria:
 ```
 
 ### PHASE 3: Story Breakdown Template
+
 ```
 ## STORY COMPONENTS
 
@@ -92,6 +94,7 @@ Acceptance Criteria:
 ```
 
 ### PHASE 3: Action List Template
+
 ```
 ## TASK 1: [Task Name]
 Priority: High/Medium/Low
@@ -109,6 +112,7 @@ TOTAL: X hours
 ```
 
 ### PHASE 4: Documentation Review Template
+
 ```
 ## Internal Documentation Review
 
@@ -137,6 +141,7 @@ TOTAL: X hours
 ```
 
 ### PHASE 5: JIRA Comment Template
+
 ```
 🚀 Development Started: [Date & Time]
 👤 Developer: [Name]
@@ -160,6 +165,7 @@ TOTAL: X hours
 ```
 
 ### PHASE 8: Approval Request Template
+
 ```
 🎯 DEVELOPMENT COMPLETE - AWAITING APPROVAL
 
@@ -204,6 +210,7 @@ Response: [User choice]
 ```
 
 ### PHASE 9: Pull Request Template
+
 ```
 **PR Title:**
 feat(JNF-25): [Feature Description]
@@ -237,6 +244,7 @@ Closes #JNF-25
 ```
 
 ### PHASE 10: JIRA Update (Ready for Review)
+
 ```
 ✅ Development Complete
 
@@ -256,6 +264,7 @@ CI/CD pipeline passing ✅
 ```
 
 ### PHASE 11: JIRA Update (Completed)
+
 ```
 🎉 COMPLETED - Merged to Production
 
@@ -281,6 +290,7 @@ CI/CD pipeline passing ✅
 ## 🛠️ Essential Commands
 
 ### Git
+
 ```bash
 git checkout -b feature/JNF-25      # Create branch
 git add .                            # Stage changes
@@ -291,6 +301,7 @@ git pull origin main                 # Update main
 ```
 
 ### Development
+
 ```bash
 pnpm dev                     # Start dev server
 pnpm test                    # Run tests
@@ -300,6 +311,7 @@ pnpm format                 # Format code
 ```
 
 ### Status Check
+
 ```bash
 git branch                   # Show current branch
 git status                   # Show changes
@@ -310,13 +322,13 @@ git log --oneline -n 5       # Show recent commits
 
 ## 📊 Documentation Reference by Phase
 
-| Phase | Documents to Check |
-|-------|-------------------|
-| 3-4 | COMPLETE-SUMMARY.md, IMPLEMENTATION-INDEX.md |
-| 4 | ultimate-detailed-implementation.md |
-| 4 | ultimate-implementation-part2.md |
-| 6 | ultimate-implementation-part2.md, Services section |
-| 7 | IMPLEMENTATION-INDEX.md, Testing Strategy |
+| Phase | Documents to Check                                 |
+| ----- | -------------------------------------------------- |
+| 3-4   | COMPLETE-SUMMARY.md, IMPLEMENTATION-INDEX.md       |
+| 4     | ultimate-detailed-implementation.md                |
+| 4     | ultimate-implementation-part2.md                   |
+| 6     | ultimate-implementation-part2.md, Services section |
+| 7     | IMPLEMENTATION-INDEX.md, Testing Strategy          |
 
 ---
 
@@ -353,22 +365,25 @@ User Reviews Delivery
 ## 🎯 When to Use This System Prompt
 
 ### Best For:
+
 ✅ Actionable user stories with clear acceptance criteria  
 ✅ Stories that fit into 1-3 days of work  
 ✅ Stories with clear technical scope  
-✅ Regular maintenance and feature development  
+✅ Regular maintenance and feature development
 
 ### Less Suitable For:
+
 ❌ Research/exploration tasks  
 ❌ Design-only stories  
 ❌ Multi-week epic stories  
-❌ Blocked/dependent stories  
+❌ Blocked/dependent stories
 
 ---
 
 ## 🔄 Loop Back Points
 
 If user says "REQUEST CHANGES":
+
 ```
 Phase 8 (Approval) ──→ Phase 6 (Development)
                            ↓
@@ -378,6 +393,7 @@ Phase 8 (Approval) ──→ Phase 6 (Development)
 ```
 
 If user says "REQUEST REVIEW":
+
 ```
 Phase 8 (Approval) ──→ Phase 4 (Research)
                            ↓
@@ -405,16 +421,19 @@ Phase 8 (Approval) ──→ Phase 4 (Research)
 ## 🚀 How to Activate
 
 **Say to the AI:**
+
 ```
 "I want to action user story [JNF-XX]: [Story Title]"
 ```
 
 **Then respond with:**
+
 ```
 YES
 ```
 
 **The AI will:**
+
 - Present Phase 1: Story confirmation
 - Guide through all 11 phases
 - Use templates for consistency

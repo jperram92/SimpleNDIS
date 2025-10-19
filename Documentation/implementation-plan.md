@@ -1,6 +1,7 @@
 # NDIS Web Application Implementation Plan
 
 ## Table of Contents
+
 1. [Project Foundation & Infrastructure](#1-project-foundation--infrastructure)
 2. [User Interface Foundation](#2-user-interface-foundation)
 3. [Participant Management](#3-participant-management)
@@ -13,6 +14,7 @@
 ### 1.1 Infrastructure Setup
 
 #### 1.1.1 Create Monorepo Structure
+
 - Set up a new Git repository
 - Create folder structure:
   ```
@@ -31,6 +33,7 @@
 - Configure TypeScript for monorepo setup
 
 #### 1.1.2 Setup Development Tools
+
 - Install and configure ESLint:
   - TypeScript rules
   - React hooks rules
@@ -49,6 +52,7 @@
   - Test utilities
 
 #### 1.1.3 Configure CI/CD Pipelines
+
 - Set up GitHub Actions workflows:
   ```yaml
   - Build validation
@@ -65,6 +69,7 @@
   - Production
 
 #### 1.1.4 Environment Configuration
+
 - Create .env templates:
   ```
   DATABASE_URL=
@@ -79,6 +84,7 @@
 - Document all environment variables
 
 #### 1.1.5 Initialize Next.js Project
+
 - Create Next.js 14+ project with App Router
 - Configure TypeScript with strict mode
 - Set up path aliases
@@ -87,6 +93,7 @@
 ### 1.2 Authentication & Authorization
 
 #### 1.2.1 NextAuth.js Integration
+
 - Install NextAuth.js
 - Configure authentication providers:
   ```typescript
@@ -98,6 +105,7 @@
 - Implement refresh token logic
 
 #### 1.2.2 JWT Token Handling
+
 - Configure JWT settings:
   ```typescript
   {
@@ -111,15 +119,10 @@
 - Add token validation middleware
 
 #### 1.2.3 RBAC System
+
 - Define role types:
   ```typescript
-  type Role =
-    | 'ADMIN'
-    | 'FINANCE'
-    | 'SCHEDULER'
-    | 'SUPPORT_WORKER'
-    | 'PARTICIPANT'
-    | 'NOMINEE';
+  type Role = 'ADMIN' | 'FINANCE' | 'SCHEDULER' | 'SUPPORT_WORKER' | 'PARTICIPANT' | 'NOMINEE';
   ```
 - Create permission matrix
 - Implement role-based middleware
@@ -130,12 +133,14 @@
 ### 1.3 Database & Schema
 
 #### 1.3.1 PostgreSQL Setup
+
 - Install PostgreSQL
 - Configure connection pools
 - Set up SSL certificates
 - Implement database backup strategy
 
 #### 1.3.2 Prisma Schema Implementation
+
 ```prisma
 model Participant {
   id             String   @id @default(uuid())
@@ -164,12 +169,14 @@ model PlanBudget {
 ```
 
 #### 1.3.3 Database Migrations
+
 - Create initial migration
 - Set up migration scripts
 - Implement rollback procedures
 - Configure migration testing
 
 #### 1.3.4 Seed Data Scripts
+
 ```typescript
 async function seed() {
   // Create test participants
@@ -182,13 +189,11 @@ async function seed() {
 ### 1.4 Core Architecture
 
 #### 1.4.1 API Route Structure
+
 ```typescript
 // Base API handler
 export abstract class BaseApiHandler {
-  protected async withAudit<T>(
-    action: string,
-    handler: () => Promise<T>
-  ): Promise<T> {
+  protected async withAudit<T>(action: string, handler: () => Promise<T>): Promise<T> {
     // Audit logic
   }
 }
@@ -204,6 +209,7 @@ export class TimesheetApi extends BaseApiHandler {
 ```
 
 #### 1.4.2 Audit Logging System
+
 ```typescript
 interface AuditEvent {
   id: string;
@@ -217,7 +223,7 @@ interface AuditEvent {
     ip: string;
     userAgent: string;
     timestamp: Date;
-  }
+  };
 }
 ```
 
@@ -226,6 +232,7 @@ interface AuditEvent {
 ### 2.1 Component Library
 
 #### 2.1.1 Tailwind Configuration
+
 ```typescript
 // tailwind.config.js
 module.exports = {
@@ -246,6 +253,7 @@ module.exports = {
 ```
 
 #### 2.1.2 Base Components
+
 ```typescript
 // Button Component
 interface ButtonProps {
@@ -276,13 +284,17 @@ interface NavItemProps {
 [Additional sections continue with similar detailed implementations...]
 
 ## 3. Participant Management
+
 [Detailed implementation specs...]
 
 ## 4. Scheduling & Timesheets
+
 [Detailed implementation specs...]
 
 ## 5. Claims & Finance
+
 [Detailed implementation specs...]
 
 ## 6. Platform Optimization
+
 [Detailed implementation specs...]

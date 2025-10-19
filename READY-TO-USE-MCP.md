@@ -16,18 +16,21 @@ The `JIRA-USER-STORY-SYSTEM-PROMPT.md` has been updated to automatically use JIR
 Before you activate the workflow, verify:
 
 ### JIRA Setup ✅
+
 - [ ] You have access to your JIRA instance (SimpleNDIS)
 - [ ] You know your JIRA Cloud ID (e.g., from `https://yoursite.atlassian.net/`)
 - [ ] You have API access (token or OAuth configured)
 - [ ] Project key is correct: **JNF**
 
 ### Development Setup ✅
+
 - [ ] Git is configured on your machine
 - [ ] Node.js and pnpm installed
 - [ ] VS Code is open with GitHub Copilot
 - [ ] PostgreSQL is running (for your dev environment)
 
 ### System Setup ✅
+
 - [ ] You've read `00-START-HERE.md` (quick overview)
 - [ ] You've read `ACTIVATION-GUIDE-JIRA-SYSTEM.md` (getting started)
 - [ ] You have `JIRA-USER-STORY-SYSTEM-PROMPT.md` ready to load
@@ -60,11 +63,13 @@ Before you activate the workflow, verify:
 **In GitHub Copilot Chat:**
 
 Say:
+
 ```
 I want to action user story JNF-2
 ```
 
 **Expected Response from Copilot:**
+
 - Copilot activates JIRA MCP
 - Fetches real JNF-2 ticket from JIRA
 - Displays ticket title, description, acceptance criteria from JIRA
@@ -75,11 +80,13 @@ I want to action user story JNF-2
 ## 🎯 Step 3: Confirm and Follow Workflow
 
 **You respond:**
+
 ```
 YES
 ```
 
 **System continues:**
+
 - Phase 2: Creates branch feature/JNF-2
 - Phase 3: Analyzes story
 - Phase 4: Reviews documentation
@@ -98,23 +105,27 @@ YES
 ### JIRA Automatically Updated At:
 
 **Phase 1:** ✅ Ticket data fetched (no manual entry needed)
+
 ```
 System fetches: Title, Description, Acceptance Criteria, Priority
 ```
 
 **Phase 5:** ✅ Development comment posted
+
 ```
 Comment: "🚀 Development Started..."
 Status: Changed to "In Development"
 ```
 
 **Phase 10:** ✅ PR comment posted
+
 ```
 Comment: "✅ Development Complete - PR Created..."
 Status: Changed to "In Review"
 ```
 
 **Phase 11:** ✅ Completion comment + close
+
 ```
 Comment: "🎉 User Story Completed..."
 Status: Changed to "Done"
@@ -137,11 +148,13 @@ Resolution: Set to "Fixed"
 ## 🔐 MCP Authentication
 
 The system will use your configured JIRA MCP connection:
+
 - Cloud ID: [Your JIRA instance]
 - API Access: [Your configured credentials]
 - Project: JNF (SimpleNDIS)
 
 **Note:** If you haven't configured JIRA MCP yet, you'll need to set up:
+
 1. JIRA Personal Access Token or OAuth
 2. Cloud ID configuration
 3. Atlassian MCP tools enabled
@@ -151,15 +164,19 @@ The system will use your configured JIRA MCP connection:
 ## 🚨 If Something Goes Wrong
 
 ### Issue: "JIRA MCP connection failed"
+
 **Solution:** Verify your Cloud ID and API credentials are correct
 
 ### Issue: "Can't find ticket JNF-2"
+
 **Solution:** Verify the ticket exists in your JIRA and project key is correct
 
 ### Issue: "Status update failed"
+
 **Solution:** Check that your JIRA user has permission to transition tickets
 
 ### Issue: "Comment posting failed"
+
 **Solution:** Verify API access has comment permissions
 
 ---
@@ -167,11 +184,13 @@ The system will use your configured JIRA MCP connection:
 ## 📞 Quick Reference
 
 **To activate workflow:**
+
 ```
 I want to action user story JNF-[NUMBER]
 ```
 
 **System will:**
+
 1. Fetch ticket via JIRA MCP ✅
 2. Present ticket data
 3. Ask for confirmation
@@ -179,6 +198,7 @@ I want to action user story JNF-[NUMBER]
 5. Close ticket when complete
 
 **You just:**
+
 - [ ] Say YES to proceed
 - [ ] Execute development phases
 - [ ] Run tests
@@ -218,7 +238,7 @@ You now have:
 ✅ Automatic ticket updates  
 ✅ Real JIRA data fetching  
 ✅ Full audit trail  
-✅ Production-ready system  
+✅ Production-ready system
 
 ---
 
@@ -241,4 +261,3 @@ The system will do the rest! ✨
 **Last Updated:** October 19, 2025
 
 Good luck! 🚀
-

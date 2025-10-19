@@ -1,6 +1,7 @@
 # NDIS Web Application - Ultimate Detailed Implementation Guide
 
 ## Executive Summary
+
 This document provides exhaustive, granular implementation specifications for a Next.js 14+ NDIS (National Disability Insurance Scheme) web application. Every section includes complete code examples, configuration files, database schemas, API endpoints, component specifications, and deployment procedures that enable an AI system to autonomously implement the entire application.
 
 ---
@@ -14,6 +15,7 @@ This document provides exhaustive, granular implementation specifications for a 
 **Objective:** Establish a production-ready monorepo structure using pnpm workspaces
 
 **Prerequisites:**
+
 - Node.js 18+ installed
 - Git initialized
 - pnpm installed globally (`npm install -g pnpm@8`)
@@ -35,6 +37,7 @@ git config user.name "NDIS Platform Dev"
 ```
 
 **File: pnpm-workspace.yaml**
+
 ```yaml
 packages:
   - 'apps/*'
@@ -43,6 +46,7 @@ packages:
 ```
 
 **File: package.json (root)**
+
 ```json
 {
   "name": "ndis-platform",
@@ -71,6 +75,7 @@ packages:
 ```
 
 **File: turbo.json (root)**
+
 ```json
 {
   "globalDependencies": ["**/.env.local"],
@@ -185,6 +190,7 @@ ndis-platform/
 #### 1.1.3 TypeScript Configuration
 
 **File: tsconfig.base.json**
+
 ```json
 {
   "compilerOptions": {
@@ -222,6 +228,7 @@ ndis-platform/
 ```
 
 **File: tsconfig.json (web app)**
+
 ```json
 {
   "extends": "../../tsconfig.base.json",
@@ -241,6 +248,7 @@ ndis-platform/
 #### 1.1.4 ESLint & Prettier Configuration
 
 **File: .eslintrc.json (root)**
+
 ```json
 {
   "root": true,
@@ -253,13 +261,7 @@ ndis-platform/
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "react",
-    "react-hooks",
-    "import",
-    "jsx-a11y"
-  ],
+  "plugins": ["@typescript-eslint", "react", "react-hooks", "import", "jsx-a11y"],
   "rules": {
     "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/explicit-function-return-types": "warn",
@@ -268,14 +270,7 @@ ndis-platform/
     "import/order": [
       "error",
       {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          "parent",
-          "sibling",
-          "index"
-        ],
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
         "alphabeticalOrder": true,
         "newlines-between": "always"
       }
@@ -290,6 +285,7 @@ ndis-platform/
 ```
 
 **File: .prettierrc.json**
+
 ```json
 {
   "semi": true,
@@ -307,6 +303,7 @@ ndis-platform/
 #### 1.1.5 Next.js Application Setup
 
 **File: apps/web/package.json**
+
 ```json
 {
   "name": "@ndis/web",
@@ -352,6 +349,7 @@ ndis-platform/
 ```
 
 **File: apps/web/next.config.js**
+
 ```javascript
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -404,6 +402,7 @@ module.exports = nextConfig;
 ```
 
 **File: apps/web/tsconfig.json**
+
 ```json
 {
   "extends": "../../tsconfig.base.json",
@@ -422,6 +421,7 @@ module.exports = nextConfig;
 ```
 
 **File: apps/web/src/app/layout.tsx**
+
 ```typescript
 import type { Metadata } from 'next';
 import { AppShell } from '@/components/layout/AppShell';
@@ -460,6 +460,7 @@ export default function RootLayout({
 #### 1.2.1 NextAuth.js Configuration
 
 **File: packages/config/src/auth.config.ts**
+
 ```typescript
 import type { NextAuthConfig } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -559,6 +560,7 @@ export default authConfig;
 ```
 
 **File: apps/web/src/app/api/auth/[...nextauth]/route.ts**
+
 ```typescript
 import NextAuth from 'next-auth';
 import authConfig from '@config/auth.config';
@@ -571,6 +573,7 @@ export { handler as GET, handler as POST };
 #### 1.2.2 Protected Route & Middleware
 
 **File: apps/web/src/middleware.ts**
+
 ```typescript
 import { withAuth } from 'next-auth/middleware';
 import { NextResponse } from 'next/server';
@@ -617,15 +620,14 @@ export const middleware = withAuth(
 );
 
 export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
-  ],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|public).*)'],
 };
 ```
 
 #### 1.2.3 RBAC Implementation
 
 **File: packages/config/src/rbac.config.ts**
+
 ```typescript
 export type Role = 'ADMIN' | 'FINANCE' | 'SCHEDULER' | 'SUPPORT_WORKER' | 'PARTICIPANT' | 'NOMINEE';
 
@@ -636,9 +638,7 @@ export interface Permission {
 }
 
 export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
-  ADMIN: [
-    { resource: '*', actions: ['create', 'read', 'update', 'delete'] },
-  ],
+  ADMIN: [{ resource: '*', actions: ['create', 'read', 'update', 'delete'] }],
   FINANCE: [
     { resource: 'claims', actions: ['read', 'update', 'approve'] },
     { resource: 'invoices', actions: ['create', 'read', 'export'] },
@@ -684,6 +684,7 @@ export async function checkPermission(
 ```
 
 **File: apps/web/src/lib/auth-utils.ts**
+
 ```typescript
 import { Session } from 'next-auth';
 import { checkPermission } from '@config/rbac.config';
@@ -697,22 +698,14 @@ export async function requirePermission(
     throw new Error('Unauthorized');
   }
 
-  const hasPermission = await checkPermission(
-    session.user.role as any,
-    resource,
-    action
-  );
+  const hasPermission = await checkPermission(session.user.role as any, resource, action);
 
   if (!hasPermission) {
     throw new Error('Forbidden');
   }
 }
 
-export function hasPermission(
-  session: Session | null,
-  resource: string,
-  action: string
-): boolean {
+export function hasPermission(session: Session | null, resource: string, action: string): boolean {
   return !!session?.user && (session.user.role === 'ADMIN' || true); // Simplified
 }
 ```
@@ -724,6 +717,7 @@ export function hasPermission(
 #### 1.3.1 PostgreSQL Setup & Connection
 
 **File: .env.example**
+
 ```env
 # Database
 DATABASE_URL="postgresql://user:password@localhost:5432/ndis_db?schema=public"
@@ -755,6 +749,7 @@ FEATURE_AUDIT_LOGGING=true
 ```
 
 **File: packages/database/prisma/schema.prisma**
+
 ```prisma
 generator client {
   provider = "prisma-client-js"
@@ -1138,6 +1133,7 @@ model AuditLog {
 #### 1.3.2 Database Migrations & Initialization
 
 **File: packages/database/src/migrations.ts**
+
 ```typescript
 import { PrismaClient } from '@prisma/client';
 
@@ -1169,6 +1165,7 @@ export { runMigrations };
 ```
 
 **File: packages/database/prisma/package.json**
+
 ```json
 {
   "name": "@ndis/database",
@@ -1189,6 +1186,7 @@ export { runMigrations };
 ### 1.4 Complete CI/CD Pipeline Setup
 
 **File: .github/workflows/ci.yml**
+
 ```yaml
 name: Continuous Integration
 
@@ -1310,6 +1308,7 @@ jobs:
 ```
 
 **File: .github/workflows/deploy-staging.yml**
+
 ```yaml
 name: Deploy to Staging
 

@@ -118,10 +118,10 @@ Price/rules engine is deterministic. Persist calculation snapshots; never recalc
 
 Templates (use these in your answer)
 A) Dependency Table
-Dependency	Type (Hard/Soft)	Why it matters	Owner	Risk	Mitigation	Due-by
-{{PACE export spec & credentials}}	Hard	Blocks claim pilot	{{Name}}	High	Use mock exporter + schema from sample	Sprint 2 Wk1
-{{Price guide version 2025-x}}	Soft	Pricing caps & UOM	{{Name}}	Med	Lock a point-in-time copy; feature flag updates	Sprint 1 Wk1
-{{Email/SMS provider}}	Soft	Notifications	{{Name}}	Low	Use dev SMTP & console logger	Sprint 1 Wk2
+Dependency Type (Hard/Soft) Why it matters Owner Risk Mitigation Due-by
+{{PACE export spec & credentials}} Hard Blocks claim pilot {{Name}} High Use mock exporter + schema from sample Sprint 2 Wk1
+{{Price guide version 2025-x}} Soft Pricing caps & UOM {{Name}} Med Lock a point-in-time copy; feature flag updates Sprint 1 Wk1
+{{Email/SMS provider}} Soft Notifications {{Name}} Low Use dev SMTP & console logger Sprint 1 Wk2
 B) First 10 Steps (Do-Now)
 
 Repo bootstrap & CI — Create mono-repo, lint/test workflows; Done: CI green on empty tests.

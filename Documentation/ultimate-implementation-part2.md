@@ -103,13 +103,15 @@ const participantRegistrationSchema = z.object({
     termsAccepted: z.boolean().refine((val) => val === true, 'Must accept terms and conditions'),
     marketingOptIn: z.boolean().default(false),
   }),
-  nominee: z.object({
-    firstName: z.string(),
-    lastName: z.string(),
-    relationship: z.string(),
-    email: z.string().email(),
-    phone: z.string(),
-  }).optional(),
+  nominee: z
+    .object({
+      firstName: z.string(),
+      lastName: z.string(),
+      relationship: z.string(),
+      email: z.string().email(),
+      phone: z.string(),
+    })
+    .optional(),
 });
 
 export class ParticipantService {
@@ -387,7 +389,10 @@ export class SchedulingService {
     }
 
     // Check if appointment is within agreement dates
-    if (isBefore(data.startTime, agreement.startDate) || isAfter(data.startTime, agreement.endDate)) {
+    if (
+      isBefore(data.startTime, agreement.startDate) ||
+      isAfter(data.startTime, agreement.endDate)
+    ) {
       throw new Error('Appointment date is outside agreement period');
     }
 
@@ -960,15 +965,12 @@ const participantService = new ParticipantService();
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession();
-    
+
     // Check permission
     await requirePermission(session, 'participants', 'create');
 
     const body = await request.json();
-    const participant = await participantService.registerParticipant(
-      session?.user?.id || '',
-      body
-    );
+    const participant = await participantService.registerParticipant(session?.user?.id || '', body);
 
     return NextResponse.json(participant, { status: 201 });
   } catch (error) {
@@ -983,7 +985,7 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession();
-    
+
     // Check permission
     await requirePermission(session, 'participants', 'read');
 

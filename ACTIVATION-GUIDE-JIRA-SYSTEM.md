@@ -11,19 +11,25 @@ This guide will help you activate and use the JIRA User Story Actioning System t
 Three key documents have been created:
 
 ### 1. **JIRA-USER-STORY-SYSTEM-PROMPT.md** (MAIN)
+
 The complete system prompt with all 11 phases, templates, and detailed instructions.
+
 - **Best for:** Understanding the full workflow
 - **Read time:** 30 minutes
 - **Contains:** Templates, commands, decision trees
 
 ### 2. **QUICK-REFERENCE-JIRA-WORKFLOW.md** (REFERENCE)
+
 Quick lookup guide with templates and commands.
+
 - **Best for:** Quick lookups while working
 - **Read time:** 10 minutes
 - **Contains:** Phase summaries, templates, decision tree
 
 ### 3. **This File** (YOU ARE HERE)
+
 Activation guide to get started right now.
+
 - **Best for:** Getting started
 - **Read time:** 5 minutes
 - **Contains:** Setup instructions, first steps
@@ -51,6 +57,7 @@ The system has **11 phases**:
 ### Step 2: Pick a User Story
 
 Go to your JIRA board and select a story. For example:
+
 - **JNF-25**: "Participant registration endpoint & UI"
 - **JNF-27**: "Plan creation API and UI with budget allocation"
 - **JNF-31**: "Timesheet submission endpoint & UI"
@@ -66,11 +73,13 @@ Say this to GitHub Copilot:
 ### Step 4: Confirm When Prompted
 
 When the system asks:
+
 ```
 ✅ Do you want to proceed with actioning this user story?
 ```
 
 Respond:
+
 ```
 YES
 ```
@@ -78,6 +87,7 @@ YES
 ### Step 5: Follow the Workflow
 
 The system will guide you through all phases. At each phase:
+
 - You'll see what's happening
 - Templates will be provided
 - You'll be asked for confirmation or input
@@ -88,17 +98,20 @@ The system will guide you through all phases. At each phase:
 ## 🎯 What Happens in Each Phase
 
 ### Phase 1: User Story Selection (30 seconds)
+
 - System presents the story
 - You confirm YES/NO
 - If NO: Pick a different story
 - If YES: Continue to Phase 2
 
 ### Phase 2: Branch Creation (30 seconds)
+
 - System creates: `git checkout -b feature/JNF-25`
 - Your local branch is ready
 - Continue to Phase 3
 
 ### Phase 3: Story Analysis (15 minutes)
+
 - System breaks down the story
 - Creates action list
 - Identifies dependencies
@@ -106,6 +119,7 @@ The system will guide you through all phases. At each phase:
 - You review and confirm understanding
 
 ### Phase 4: Research & Documentation (30 minutes)
+
 - System reviews all documentation:
   - `COMPLETE-SUMMARY.md`
   - `IMPLEMENTATION-INDEX.md`
@@ -116,6 +130,7 @@ The system will guide you through all phases. At each phase:
 - Continue when ready
 
 ### Phase 5: JIRA Update (5 minutes)
+
 - System updates ticket with:
   - Methodology summary
   - Implementation plan
@@ -124,6 +139,7 @@ The system will guide you through all phases. At each phase:
 - JIRA ticket now reflects work in progress
 
 ### Phase 6: Development (2-8 hours depending on story)
+
 - System implements each task
 - Creates/modifies files
 - Commits frequently
@@ -131,6 +147,7 @@ The system will guide you through all phases. At each phase:
 - Can request changes anytime
 
 ### Phase 7: Testing (30 minutes)
+
 - System runs all tests
 - Performs manual verification
 - Creates test report
@@ -138,6 +155,7 @@ The system will guide you through all phases. At each phase:
 - All acceptance criteria verified
 
 ### Phase 8: Approval Request (depends on you)
+
 - System presents complete summary
 - Shows all files changed
 - Shows all tests passing
@@ -148,6 +166,7 @@ The system will guide you through all phases. At each phase:
   - 📋 PROVIDE FEEDBACK → Incorporate and repeat
 
 ### Phase 9: Commit to GitHub (5 minutes)
+
 - System pushes branch: `git push origin feature/JNF-25`
 - Creates Pull Request with full details
 - Waits for CI/CD pipeline
@@ -155,12 +174,14 @@ The system will guide you through all phases. At each phase:
 - PR is ready for review
 
 ### Phase 10: Await Merge (2-24 hours)
+
 - Team lead reviews PR
 - May request changes or approve
 - System updates JIRA
 - Waits for merge to main branch
 
 ### Phase 11: Completion (5 minutes)
+
 - Verifies merge to main
 - Closes JIRA ticket
 - Generates completion report
@@ -230,21 +251,27 @@ System: [Proceeds to next phase or implements requested changes]
 ## 💡 Tips for Success
 
 ### 1. **Clear Acceptance Criteria**
+
 Before starting, make sure the story has clear acceptance criteria. Stories without clear criteria may need to go back to Phase 4 for additional research.
 
 ### 2. **Review Each Phase**
+
 Don't rush through phases. Take time to understand the breakdown and research.
 
 ### 3. **Provide Feedback Early**
+
 If you notice something during development, say so immediately rather than waiting for Phase 8.
 
 ### 4. **Trust the Documentation**
+
 The system will reference your existing documentation. Review those files when referenced.
 
 ### 5. **Use REQUEST REVIEW**
+
 If you're unsure if the implementation is correct, use "REQUEST REVIEW" at Phase 8 to have the system do a deeper analysis.
 
 ### 6. **Commit History Matters**
+
 The system creates small, focused commits. You'll be able to review the git history to understand what was changed and why.
 
 ---
@@ -254,6 +281,7 @@ The system creates small, focused commits. You'll be able to review the git hist
 ### Prerequisites
 
 You need:
+
 - ✅ GitHub Copilot access in VS Code
 - ✅ Git installed and configured
 - ✅ Node.js and pnpm for the project
@@ -393,6 +421,7 @@ Delivery Report generated
 ### Experienced Users?
 
 Just go straight to:
+
 ```
 "I want to action user story JNF-XX: [Story Title]"
 ```
@@ -406,6 +435,7 @@ And follow along with the system.
 ### Q: What if I don't approve in Phase 8?
 
 **A:** You have options:
+
 - **REQUEST CHANGES** - Tell the system what needs fixing, it loops back to Phase 6
 - **REQUEST REVIEW** - Have the system review documentation more deeply
 - **PROVIDE FEEDBACK** - Give feedback that the system incorporates
@@ -423,6 +453,7 @@ You can loop through as many times as needed until you're satisfied.
 ### Q: Can I look at the code before approval?
 
 **A:** Absolutely! The system commits frequently to the branch. You can review commits at any time with:
+
 ```bash
 git log --oneline
 git show [commit-hash]
@@ -431,6 +462,7 @@ git show [commit-hash]
 ### Q: What if the story is more complex than expected?
 
 **A:** Use **REQUEST REVIEW** in Phase 8. The system will:
+
 - Do deeper research
 - Review more documentation
 - Provide additional analysis
@@ -443,6 +475,7 @@ git show [commit-hash]
 ### Q: Can I action multiple stories at once?
 
 **A:** Yes, but each story gets its own branch:
+
 - Story 1: `feature/JNF-25`
 - Story 2: `feature/JNF-27`
 - Story 3: `feature/JNF-31`
@@ -485,21 +518,25 @@ The system will guide you through all 11 phases!
 ## 📚 Reference Documents
 
 ### Main System Prompt
+
 - **File:** `JIRA-USER-STORY-SYSTEM-PROMPT.md`
 - **Purpose:** Complete reference with all phases and templates
 - **When to use:** Deep dive, understanding workflow, templates
 
 ### Quick Reference
+
 - **File:** `QUICK-REFERENCE-JIRA-WORKFLOW.md`
 - **Purpose:** Quick lookup during work
 - **When to use:** Phase summaries, templates, decision trees
 
 ### Getting Started
+
 - **File:** This file (`Activation-Guide.md`)
 - **Purpose:** Onboarding and first steps
 - **When to use:** First time setup, FAQ
 
 ### Project Documentation
+
 - **File:** `Documentation/COMPLETE-SUMMARY.md`
 - **Purpose:** Project context and status
 - **When to use:** Understanding project scope
@@ -568,7 +605,7 @@ After completing a user story with this system, you will have:
 
 ## 🚀 Let's Get Started!
 
-You have everything you need. 
+You have everything you need.
 
 **Say this to GitHub Copilot:**
 

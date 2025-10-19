@@ -23,19 +23,19 @@ Success =
 99.9% uptime, deterministic rule execution, automated testing, full audit trail, and API latency < 200ms (p95) on critical endpoints.
 
 ⚙️ Core Tech Stack (default unless overridden)
-Layer	Tech	Notes
-Language	TypeScript (Node.js 20+)	Strict mode, ESM modules
-Framework	Next.js API Routes / NestJS	Server-side APIs, modular
-ORM	Prisma ORM	Postgres (Neon or Supabase)
-Database	PostgreSQL	JSONB for dynamic pricing metadata
-Auth	NextAuth.js / Auth0	JWT & RBAC via claims
-Storage	S3-compatible (R2/Supabase Storage)	Encrypted, signed URLs
-Queue/Jobs	Inngest / Temporal	Claim exports, audits, emails
-Search	PostgreSQL FTS / Meilisearch	Participants, providers
-Infra	Vercel (FE) + Fly.io/Render (API)	Separate worker dynos
-Monitoring	OpenTelemetry + Sentry	Traces, metrics, logs
-Testing	Vitest, Supertest	Unit + integration + contract tests
-CI/CD	GitHub Actions	Blue/green + seed migrations
+Layer Tech Notes
+Language TypeScript (Node.js 20+) Strict mode, ESM modules
+Framework Next.js API Routes / NestJS Server-side APIs, modular
+ORM Prisma ORM Postgres (Neon or Supabase)
+Database PostgreSQL JSONB for dynamic pricing metadata
+Auth NextAuth.js / Auth0 JWT & RBAC via claims
+Storage S3-compatible (R2/Supabase Storage) Encrypted, signed URLs
+Queue/Jobs Inngest / Temporal Claim exports, audits, emails
+Search PostgreSQL FTS / Meilisearch Participants, providers
+Infra Vercel (FE) + Fly.io/Render (API) Separate worker dynos
+Monitoring OpenTelemetry + Sentry Traces, metrics, logs
+Testing Vitest, Supertest Unit + integration + contract tests
+CI/CD GitHub Actions Blue/green + seed migrations
 🧩 Primary Responsibilities
 
 Data Modeling & Schema Governance
@@ -85,6 +85,7 @@ Log latency and error rate per route.
 Set thresholds for p95 performance.
 
 🧱 Module Breakdown
+
 1. Auth & Access
 
 JWT with scopes (participant:read, finance:write, etc.)
@@ -214,17 +215,17 @@ Configure Sentry, OpenTelemetry, and /healthz endpoint.
 
 🧠 Data Model Highlights (Prisma)
 model Claim {
-  id             String   @id @default(uuid())
-  timesheetId    String
-  timesheet      Timesheet @relation(fields: [timesheetId], references: [id])
-  claimType      String   // Delivered, Cancelled, Reversal
-  supportNumber  String
-  quantity       Decimal
-  unitPrice      Decimal
-  total          Decimal
-  exportStatus   String   // Pending, Exported, Failed, Reversed
-  exportPayload  Json?
-  createdAt      DateTime @default(now())
+id String @id @default(uuid())
+timesheetId String
+timesheet Timesheet @relation(fields: [timesheetId], references: [id])
+claimType String // Delivered, Cancelled, Reversal
+supportNumber String
+quantity Decimal
+unitPrice Decimal
+total Decimal
+exportStatus String // Pending, Exported, Failed, Reversed
+exportPayload Json?
+createdAt DateTime @default(now())
 }
 
 🔒 Security Standards
@@ -240,13 +241,13 @@ Audit logs immutable; signed using hash chains.
 Implement rate limiting & abuse detection.
 
 🧪 Testing Strategy
-Level	Framework	Focus
-Unit	Vitest	Rules engine, validators
-Integration	Supertest	API contracts & DB interaction
-Contract	OpenAPI Validator	Schema correctness
-E2E	Playwright	User flows (via FE integration)
-Performance	k6	Throughput, latency
-Security	OWASP ZAP	Pen test automation
+Level Framework Focus
+Unit Vitest Rules engine, validators
+Integration Supertest API contracts & DB interaction
+Contract OpenAPI Validator Schema correctness
+E2E Playwright User flows (via FE integration)
+Performance k6 Throughput, latency
+Security OWASP ZAP Pen test automation
 📊 Observability & Deployment
 
 Metrics: req_latency_ms, db_query_time, claim_export_fail_rate
@@ -260,13 +261,13 @@ CI/CD: Migrations auto-run; rollback plan defined.
 Backups: Daily PITR; test restore monthly.
 
 📅 Sprint Roadmap (12 weeks / 6 sprints)
-Sprint	Focus	Deliverable
-S1	Schema, Auth, Audit	DB + secure endpoints
-S2	Pricing Engine	JSON rules, calculations
-S3	Timesheets	Workflow + calc persistence
-S4	Claims	Export + reversal logic
-S5	Invoicing	PDF + Finance integration
-S6	Hardening	Observability, load tests, docs
+Sprint Focus Deliverable
+S1 Schema, Auth, Audit DB + secure endpoints
+S2 Pricing Engine JSON rules, calculations
+S3 Timesheets Workflow + calc persistence
+S4 Claims Export + reversal logic
+S5 Invoicing PDF + Finance integration
+S6 Hardening Observability, load tests, docs
 🧾 Definition of Done (DoD)
 
 Code merged, linted, and tested.
@@ -282,11 +283,11 @@ CI green, coverage > 85%.
 README + ADR updated.
 
 🚨 Critical Risks
-Risk	Impact	Mitigation
-PACE API spec change	Claim failure	Mock schema + feature flag exports
-Inconsistent price data	Billing errors	Versioned price books
-Data leaks (PII)	Legal risk	Encrypt + role masking
-Long-running exports	Queue saturation	Background workers + retries
+Risk Impact Mitigation
+PACE API spec change Claim failure Mock schema + feature flag exports
+Inconsistent price data Billing errors Versioned price books
+Data leaks (PII) Legal risk Encrypt + role masking
+Long-running exports Queue saturation Background workers + retries
 📋 Deliverables
 
 api/ folder with modular routes

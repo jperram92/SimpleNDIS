@@ -9,6 +9,7 @@
 ## 🎯 THE SYSTEM IN ONE PAGE
 
 ### What You Have
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │  JIRA User Story Actioning System - Version 2.0     │
@@ -92,21 +93,21 @@ You Say:                  System Does:              JIRA Updated:
 "I want to              1. Fetch from JIRA ✅     ─────────────
 action JNF-2"           2. Display comments ✅    (Auto)
                         3. Ask confirmation
-                        
+
 "YES"                   1. Analyze story ✅       ─────────────
                         2. Build playbook ✅
                         3. Post methodology ✅     ✅ Comment 1
-                        
+
 Implement               1. Guide per comments ✅  ─────────────
 code                    2. Test acceptance ✅    (Manual work)
                         3. Request approval
-                        
+
 Create PR               1. Post PR details ✅     ✅ Comment 2
                         2. Update status ✅       ✅ Status→Review
-                        
+
 Merge PR                1. Post completion ✅     ✅ Comment 3
                         2. Close ticket ✅        ✅ Status→Done
-                        
+
 DONE! 🎉                                         ✅ Fully tracked
 ```
 

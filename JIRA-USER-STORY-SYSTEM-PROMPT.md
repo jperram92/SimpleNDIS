@@ -12,6 +12,7 @@
 ```
 
 **MCP Behavior:**
+
 - Automatically uses these credentials for all JIRA calls
 - No need to ask for JIRA Cloud ID again
 - All tickets fetched from your SimpleNDIS JIRA instance
@@ -30,9 +31,11 @@ This system prompt orchestrates the complete workflow for actioning JIRA user st
 ### **PHASE 1: USER STORY SELECTION & CONFIRMATION**
 
 #### Step 1.1: Fetch Ticket via JIRA MCP
+
 **When:** Beginning of workflow  
 **Who:** Human initiates or AI prompts  
 **Action:** USE JIRA MCP TO FETCH REAL TICKET DATA
+
 ```
 🔗 ACTIVATING JIRA MCP INTEGRATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -44,7 +47,7 @@ STEP 1: Parse ticket ID from user input
 STEP 2: Query JIRA via MCP
         Call: mcp_atlassian_getJiraIssue(cloudId, "JNF-2")
         Receive: Real ticket data from JIRA
-        
+
 STEP 3: Extract ticket details
         - Title
         - Description
@@ -61,9 +64,11 @@ STEP 4: Proceed to Step 1.2 with real data
 ```
 
 #### Step 1.2: User Story Presentation (with Real Data)
+
 **When:** After MCP fetch completes  
 **Who:** System presents to human  
 **Action:**
+
 ```
 📌 PRESENTING USER STORY FOR ACTIONING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -90,16 +95,18 @@ Assignee: [ACTUAL_ASSIGNEE from JIRA]
 ```
 
 #### Step 1.3: Confirmation Request
+
 **When:** After story presentation with real data  
 **Question for User:**
+
 ```
 ✅ Do you want to proceed with actioning this user story?
-   
+
    Type: YES or NO
-   
+
    If NO: Request different story via:
           "I want to action user story [JNF-XX]"
-          
+
    If YES: Proceed to Phase 2
 ```
 
@@ -108,6 +115,7 @@ Assignee: [ACTUAL_ASSIGNEE from JIRA]
 ### **PHASE 2: BRANCH CREATION**
 
 #### Step 2.1: Git Branch Setup
+
 **When:** User confirms YES  
 **Action:** Create feature branch with naming convention
 
@@ -119,13 +127,16 @@ git checkout -b feature/JNF-25
 ```
 
 **Confirmation:**
+
 ```
 ✅ Branch Created: feature/JNF-25
    Local branch ready for development
 ```
 
 #### Step 2.2: Branch Validation
+
 **Action:** Confirm we're on correct branch
+
 ```
 🔍 Current Branch: feature/JNF-25
 ✅ Ready for implementation
@@ -136,6 +147,7 @@ git checkout -b feature/JNF-25
 ### **PHASE 3: COMPREHENSIVE STORY ANALYSIS & METHODOLOGY**
 
 #### Step 3.1: Story Breakdown Analysis
+
 **When:** After branch creation  
 **Action:** Create detailed analysis document
 
@@ -183,6 +195,7 @@ git checkout -b feature/JNF-25
 ```
 
 #### Step 3.2: Create Action List
+
 **When:** After breakdown analysis  
 **Action:** Create detailed task breakdown
 
@@ -239,6 +252,7 @@ git checkout -b feature/JNF-25
 ### **PHASE 4: COMPREHENSIVE DOCUMENTATION & RESEARCH REVIEW**
 
 #### Step 4.1: Documentation Review
+
 **When:** After action list creation  
 **Action:** Systematically review all relevant documentation
 
@@ -250,6 +264,7 @@ git checkout -b feature/JNF-25
 ```
 
 **Check Each Document:**
+
 ```
 📄 Document: COMPLETE-SUMMARY.md
    Relevance: ✅ / ❌
@@ -279,6 +294,7 @@ git checkout -b feature/JNF-25
 ```
 
 #### Step 4.2: External Research (if needed)
+
 **When:** Documentation gap exists  
 **Action:** Search for best practices and documentation
 
@@ -304,6 +320,7 @@ git checkout -b feature/JNF-25
 ```
 
 #### Step 4.3: Context Summary
+
 **When:** After all research  
 **Action:** Summarize all findings
 
@@ -338,6 +355,7 @@ git checkout -b feature/JNF-25
 ### **PHASE 5: JIRA UPDATE (BEFORE DEVELOPMENT) - VIA MCP**
 
 #### Step 5.1: Update JIRA with Context via MCP
+
 **When:** Before starting development  
 **Action:** Use JIRA MCP Integration to update the ticket
 
@@ -370,6 +388,7 @@ STEP 4: Confirm all updates succeeded in JIRA
 ```
 
 #### Step 5.2: Development Comment Template
+
 **Content for MCP Comment:**
 
 ```
@@ -417,6 +436,7 @@ Example:
 ```
 
 #### Step 5.3: MCP Execution Example
+
 **How to call JIRA MCP:**
 
 ```javascript
@@ -451,6 +471,7 @@ mcp_atlassian_getJiraIssue(
 ### **PHASE 6: DEVELOPMENT & IMPLEMENTATION**
 
 #### Step 6.1: Execute Development Tasks
+
 **When:** After JIRA update  
 **For Each Task:**
 
@@ -480,6 +501,7 @@ git commit -m "feat(JNF-25): [Descriptive commit message]"
 ```
 
 #### Step 6.2: Code Quality Checks
+
 **During Development:**
 
 ```
@@ -512,6 +534,7 @@ git commit -m "feat(JNF-25): [Descriptive commit message]"
 ```
 
 #### Step 6.3: Frequent Commits
+
 **During Development:**
 
 ```
@@ -536,6 +559,7 @@ Relates to JNF-25"
 ### **PHASE 7: DEVELOPMENT COMPLETION & TESTING**
 
 #### Step 7.1: Run All Tests
+
 **When:** All development tasks complete  
 **Action:**
 
@@ -551,6 +575,7 @@ pnpm test:coverage
 ```
 
 **Expected Result:**
+
 ```
 ✅ All tests passing
 ✅ No console errors/warnings
@@ -558,6 +583,7 @@ pnpm test:coverage
 ```
 
 #### Step 7.2: Manual Testing Verification
+
 **When:** Automated tests passing  
 **Action: For each acceptance criterion:**
 
@@ -594,6 +620,7 @@ Evidence: [Screenshot/log output]
 ### **PHASE 8: USER APPROVAL REQUEST**
 
 #### Step 8.1: Present Development Summary
+
 **When:** Testing complete  
 **Action:**
 
@@ -685,6 +712,7 @@ Please respond with your choice and any additional details.
 ### **PHASE 9: COMMIT TO GITHUB**
 
 #### Step 9.1: Final Verification
+
 **When:** User approves  
 **Action:**
 
@@ -700,6 +728,7 @@ git status
 ```
 
 #### Step 9.2: Create Pull Request
+
 **When:** All commits are pushed  
 **Action:**
 
@@ -756,6 +785,7 @@ Closes #JNF-25
 ```
 
 #### Step 9.3: Push to GitHub
+
 **Action:**
 
 ```bash
@@ -770,6 +800,7 @@ git push origin feature/JNF-25
 ```
 
 **Wait for CI/CD Results:**
+
 ```
 ✅ CI/CD Pipeline Status
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -787,6 +818,7 @@ Result: Ready for merge review
 ### **PHASE 10: UPDATE JIRA & AWAIT MAIN BRANCH MERGE - VIA MCP**
 
 #### Step 10.1: Update JIRA Ticket via MCP
+
 **When:** PR created and CI/CD passing  
 **Action:** Use JIRA MCP to update ticket with PR details
 
@@ -822,6 +854,7 @@ STEP 4: Confirm all updates in JIRA
 ```
 
 #### Step 10.2: PR Comment Template for MCP
+
 **Content to post via MCP:**
 
 ```
@@ -838,13 +871,13 @@ STEP 4: Confirm all updates in JIRA
 ## Completion Summary
 
 ✅ All acceptance criteria met:
-- Criterion 1: [Status] 
+- Criterion 1: [Status]
 - Criterion 2: [Status]
 - Criterion 3: [Status]
 
 ✅ Quality Assurance:
 - Unit Tests: [X/X] passing ✅
-- Integration Tests: [X/X] passing ✅  
+- Integration Tests: [X/X] passing ✅
 - Manual Verification: Complete ✅
 - ESLint: Passing ✅
 - TypeScript: No errors ✅
@@ -865,6 +898,7 @@ STEP 4: Confirm all updates in JIRA
 ```
 
 #### Step 10.3: MCP Execution Example
+
 **How to call JIRA MCP for Phase 10:**
 
 ```javascript
@@ -895,6 +929,7 @@ mcp_atlassian_getJiraIssue(
 ```
 
 #### Step 10.4: Await Merge Approval
+
 **When:** PR in review  
 **Action:** Wait for:
 
@@ -921,6 +956,7 @@ JIRA Status: "In Review"
 ### **PHASE 11: COMPLETION & TICKET CLOSURE - VIA MCP**
 
 #### Step 11.1: Verify Merge
+
 **When:** User confirms merge to main  
 **Action:**
 
@@ -935,6 +971,7 @@ git log --grep="JNF-2"
 ```
 
 #### Step 11.2: Final JIRA Update via MCP
+
 **When:** Merge verified  
 **Action:** Use JIRA MCP to close ticket and add completion summary
 
@@ -972,6 +1009,7 @@ STEP 4: Call JIRA MCP - Verify Closure
 ```
 
 #### Step 11.3: Completion Comment Template for MCP
+
 **Content to post via MCP:**
 
 ```
@@ -1025,6 +1063,7 @@ STEP 4: Call JIRA MCP - Verify Closure
 ```
 
 #### Step 11.4: MCP Execution Example
+
 **How to call JIRA MCP for Phase 11:**
 
 ```javascript
@@ -1065,6 +1104,7 @@ mcp_atlassian_getJiraIssue(
 ```
 
 #### Step 11.5: Final Summary Report
+
 **When:** Ticket closed successfully in JIRA  
 **Action:**
 
@@ -1111,7 +1151,9 @@ mcp_atlassian_getJiraIssue(
 
 Proceed to next user story:
 ```
+
 I want to action user story [JNF-XX]: [Title]
+
 ```
 
 Or:
@@ -1204,6 +1246,7 @@ Or:
 ## 📌 Key Commands Reference
 
 ### Git Commands
+
 ```bash
 # Create and checkout branch
 git checkout -b feature/JNF-25
@@ -1222,6 +1265,7 @@ git checkout main
 ```
 
 ### Development Commands
+
 ```bash
 # Install dependencies
 pnpm install
@@ -1241,6 +1285,7 @@ pnpm format
 ```
 
 ### JIRA MCP Commands
+
 ```
 # Update ticket status
 JIRA: Transition issue [JNF-25] to "In Development"
@@ -1261,19 +1306,19 @@ JIRA: Search issues in project JNF
 
 When working through these phases, consult:
 
-| Phase | Document | Section |
-|-------|----------|---------|
-| 1 | Any | Start here |
-| 3 | IMPLEMENTATION-INDEX.md | Story Components |
-| 4 | COMPLETE-SUMMARY.md | Feature Matrix |
-| 4 | ultimate-detailed-implementation.md | Architecture & Patterns |
-| 4 | ultimate-implementation-part2.md | Service Examples |
-| 6 | ultimate-implementation-part2.md | Services & Components |
-| 7 | IMPLEMENTATION-INDEX.md | Testing Strategy |
-| 8 | None | User decision |
-| 9 | None | Standard Git workflow |
-| 10 | None | JIRA update |
-| 11 | COMPLETE-SUMMARY.md | Deployment info |
+| Phase | Document                            | Section                 |
+| ----- | ----------------------------------- | ----------------------- |
+| 1     | Any                                 | Start here              |
+| 3     | IMPLEMENTATION-INDEX.md             | Story Components        |
+| 4     | COMPLETE-SUMMARY.md                 | Feature Matrix          |
+| 4     | ultimate-detailed-implementation.md | Architecture & Patterns |
+| 4     | ultimate-implementation-part2.md    | Service Examples        |
+| 6     | ultimate-implementation-part2.md    | Services & Components   |
+| 7     | IMPLEMENTATION-INDEX.md             | Testing Strategy        |
+| 8     | None                                | User decision           |
+| 9     | None                                | Standard Git workflow   |
+| 10    | None                                | JIRA update             |
+| 11    | COMPLETE-SUMMARY.md                 | Deployment info         |
 
 ---
 
@@ -1306,6 +1351,7 @@ To action a JIRA user story, say:
 **"I want to action user story [JNF-XX]"** (Title is optional - MCP will fetch it)
 
 The system will:
+
 1. **USE JIRA MCP** to fetch the actual ticket from JIRA
 2. Extract ticket details (ID, title, description, acceptance criteria, etc.)
 3. Present the story for confirmation using real data
@@ -1324,6 +1370,7 @@ The system will:
 **CRITICAL: Read this first**
 
 This system automatically uses JIRA MCP (Atlassian) to:
+
 - ✅ Fetch real ticket data from your JIRA instance
 - ✅ Pull acceptance criteria automatically
 - ✅ Update ticket status throughout workflow
@@ -1336,6 +1383,7 @@ This system automatically uses JIRA MCP (Atlassian) to:
 ### When You Say: "I want to action user story JNF-2"
 
 The system will:
+
 1. Recognize the ticket ID (JNF-2)
 2. **Activate JIRA MCP Tools** automatically
 3. **Query JIRA** for the actual ticket details:
@@ -1353,20 +1401,24 @@ The system will:
 ### Throughout the Workflow:
 
 **Phase 1 (Confirmation):**
+
 - Uses JIRA MCP to fetch ticket data
 - Displays real acceptance criteria
 
 **Phase 5 (JIRA Update - Before Development):**
+
 - Uses JIRA MCP to add comment: "Development Methodology & Plan"
 - Automatically transitions issue status to "In Development"
 - Links related JIRA issues if they exist
 
 **Phase 10 (Await Merge):**
+
 - Uses JIRA MCP to update ticket with PR link
 - Transitions status to "In Review"
 - Adds comment: "Pull Request Created - Awaiting Review"
 
 **Phase 11 (Completion):**
+
 - Uses JIRA MCP to add final completion comment
 - Transitions ticket to "Done" / "Closed"
 - Adds completion summary with metrics
@@ -1383,12 +1435,14 @@ The system will:
 4. ✅ The project key is correct (e.g., JNF for SimpleNDIS)
 
 **Cloud ID Configuration:**
+
 - **JIRA Instance:** `ndisapppoc`
 - **JIRA URL:** `https://ndisapppoc.atlassian.net/`
 - **Project Key:** `JNF`
 - **Project Name:** SimpleNDIS
 
 **Cloud ID will be used automatically in all MCP calls:**
+
 ```
 cloudId: "ndisapppoc"
 ```
@@ -1398,12 +1452,14 @@ cloudId: "ndisapppoc"
 ## 📋 JIRA MCP Command Reference
 
 ### Fetch Ticket Details (Phase 1)
+
 ```
 JIRA MCP: Get issue [JNF-2]
 Returns: Title, Description, Acceptance Criteria, Priority, Epic, Status, etc.
 ```
 
 ### Add Development Comment (Phase 5)
+
 ```
 JIRA MCP: Add comment to [JNF-2]
 Title: "Development Methodology & Plan"
@@ -1411,11 +1467,13 @@ Body: [Methodology, action list, research findings]
 ```
 
 ### Update Ticket Status (Phase 5)
+
 ```
 JIRA MCP: Transition [JNF-2] to "In Development"
 ```
 
 ### Add PR Comment (Phase 10)
+
 ```
 JIRA MCP: Add comment to [JNF-2]
 Title: "Pull Request Created - Awaiting Review"
@@ -1423,6 +1481,7 @@ Body: [PR Link, Testing Results, Ready for Review status]
 ```
 
 ### Close Ticket (Phase 11)
+
 ```
 JIRA MCP: Transition [JNF-2] to "Done"
 JIRA MCP: Add comment to [JNF-2]
@@ -1521,6 +1580,7 @@ USER SAYS:
 ## ⚙️ How MCP Integration Works in Each Phase
 
 ### Phase 1: Fetch Real Ticket
+
 ```
 SYSTEM ACTION:
 1. Parse ticket ID from user input (JNF-2)
@@ -1539,6 +1599,7 @@ SYSTEM ACTION:
 ```
 
 ### Phase 5: Update JIRA with Methodology
+
 ```
 SYSTEM ACTION:
 1. Prepare comment with methodology & action list
@@ -1549,6 +1610,7 @@ SYSTEM ACTION:
 ```
 
 ### Phase 10: Update with PR Details
+
 ```
 SYSTEM ACTION:
 1. Prepare comment with PR link & testing results
@@ -1559,6 +1621,7 @@ SYSTEM ACTION:
 ```
 
 ### Phase 11: Close Ticket
+
 ```
 SYSTEM ACTION:
 1. Prepare final completion comment
@@ -1596,6 +1659,7 @@ To action a user story, provide:
 3. Then follow the workflow
 
 Example:
+
 ```
 I want to action user story JNF-25: Participant registration endpoint & UI
 

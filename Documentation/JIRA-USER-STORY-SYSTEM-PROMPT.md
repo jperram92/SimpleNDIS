@@ -46,6 +46,7 @@
 ## 🎬 System Overview
 
 ### Purpose
+
 This system provides a **complete, end-to-end workflow** for actioning JIRA user stories using GitHub Copilot with MCP integration. The system automatically:
 
 1. ✅ Fetches real JIRA tickets
@@ -57,12 +58,14 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 ### When to Use This System
 
 **Use this system when:**
+
 - You need to action a JIRA user story (e.g., "I want to action JNF-2")
 - You need structured guidance through implementation
 - You want automatic JIRA updates as you progress
 - You need to track implementation with GitHub PRs + JIRA comments
 
 **Do NOT use this system for:**
+
 - Reviewing completed tickets
 - Editing tickets directly in JIRA UI
 - Running arbitrary terminal commands
@@ -80,7 +83,9 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 **Objective:** Display the JIRA ticket with all context (description, acceptance criteria, comments) and await user confirmation.
 
 **Process:**
+
 1. **Fetch ticket from JIRA** using MCP:
+
    ```
    mcp_atlassian_getJiraIssue(
      cloudId: "https://ndisapppoc.atlassian.net",
@@ -97,6 +102,7 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
    - Story points (if set)
 
 3. **Display formatted presentation:**
+
    ```markdown
    📌 PHASE 1: USER STORY PRESENTATION - [TICKET_ID]
    ═══════════════════════════════════════════════════
@@ -146,14 +152,17 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 **Objective:** Create a Git feature branch following consistent naming conventions.
 
 **Process:**
+
 1. **Generate branch name** from ticket:
+
    ```
    feature/JNF-[ID]-[kebab-case-title]
-   
+
    Example: feature/JNF-2-monorepo-bootstrap-pnpm-turborepo
    ```
 
 2. **Create branch** (command provided):
+
    ```bash
    git checkout -b feature/JNF-2-monorepo-bootstrap-pnpm-turborepo
    ```
@@ -173,6 +182,7 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 **Objective:** Deep-dive analysis of the user story using comments as primary context.
 
 **Process:**
+
 1. **Extract from ticket comments:**
    - Key requirements (explicit + implicit)
    - Implementation constraints
@@ -181,30 +191,37 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
    - Pitfalls to avoid
 
 2. **Create analysis document:**
+
    ```markdown
    # Story Analysis - [TICKET_ID]
-   
+
    ## Requirements (from comments)
+
    - [Requirement 1] (from Comment X)
    - [Requirement 2] (from Comment Y)
-   
+
    ## Implementation Constraints
+
    - [Constraint 1]
    - [Constraint 2]
-   
+
    ## Tech Stack (from comments)
+
    - [Tech 1]
    - [Tech 2]
-   
+
    ## Documentation References
+
    - [Doc 1]
    - [Doc 2]
-   
+
    ## Pitfalls to Avoid
+
    - ❌ [Pitfall 1]
    - ❌ [Pitfall 2]
-   
+
    ## Acceptance Criteria Checklist
+
    - [ ] [Criterion 1]
    - [ ] [Criterion 2]
    - [ ] [Criterion 3]
@@ -226,6 +243,7 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 **Objective:** Review referenced documentation to build complete implementation context.
 
 **Process:**
+
 1. **Identify documentation references** from comments:
    - IMPLEMENTATION-INDEX.md
    - ultimate-detailed-implementation.md
@@ -239,15 +257,18 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
    - Best practices
 
 3. **Create implementation playbook:**
+
    ```markdown
    # Implementation Playbook - [TICKET_ID]
-   
+
    ## Step 1: [First Task]
+
    Reference: [Doc Name]
    Pattern: [Pattern from doc]
    Code Example: [Code snippet]
-   
+
    ## Step 2: [Second Task]
+
    ...
    ```
 
@@ -266,43 +287,52 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 **Objective:** Post implementation methodology to JIRA as a comment, establishing the approach before coding begins.
 
 **Process:**
+
 1. **Create methodology comment:**
+
    ```markdown
    **[Implementation Methodology Posted by GitHub Copilot]**
 
    Status: IN DEVELOPMENT (Phase 5 of 11)
    Started: [Current Date/Time]
-   
+
    ## Approach
+
    I am following a structured 11-phase workflow to action this story.
-   
+
    ## Comment Parsing
+
    - ✅ All ticket comments reviewed for implementation guidance
    - ✅ Key constraints identified: [List key constraints from comments]
    - ✅ Documentation references extracted: [Doc1, Doc2, ...]
-   
+
    ## Phases 1-4 Complete
+
    - ✅ Phase 1: Story presented & confirmed
    - ✅ Phase 2: Feature branch created
    - ✅ Phase 3: Story analyzed using comments
    - ✅ Phase 4: Documentation reviewed
-   
+
    ## Next Steps (Phases 6-11)
+
    - Phase 6: Begin implementation per playbook
    - Phase 7: Test implementation against acceptance criteria
    - Phase 8: Request approval
    - Phase 9: Commit & create PR
    - Phase 10: Post PR details & update status
    - Phase 11: Verify merge & close ticket
-   
+
    ## Implementation Plan
+
    [High-level plan from Phase 4 playbook]
-   
+
    ---
-   *This comment tracks progress through the JIRA User Story Actioning System*
+
+   _This comment tracks progress through the JIRA User Story Actioning System_
    ```
 
 2. **Post comment to JIRA** using MCP:
+
    ```
    mcp_atlassian_addCommentToJiraIssue(
      cloudId: "https://ndisapppoc.atlassian.net",
@@ -326,6 +356,7 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 **Objective:** Execute the implementation playbook from Phase 4.
 
 **Process:**
+
 1. **Follow implementation playbook steps:**
    - Create files/directories
    - Write code
@@ -333,6 +364,7 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
    - Respect constraints from comments
 
 2. **Commit regularly** with semantic messages:
+
    ```bash
    git commit -m "feat(JNF-2): Step 1 - [Description]"
    git commit -m "feat(JNF-2): Step 2 - [Description]"
@@ -353,7 +385,9 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 **Objective:** Verify the implementation against all acceptance criteria.
 
 **Process:**
+
 1. **Test each criterion:**
+
    ```markdown
    ✅ Criterion 1: [Run test] → PASS
    ✅ Criterion 2: [Run test] → PASS
@@ -361,15 +395,18 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
    ```
 
 2. **Document test results:**
+
    ```markdown
    # Test Results - [TICKET_ID]
-   
+
    ## Local Testing
+
    - [Test 1]: PASS
    - [Test 2]: PASS
    - [Test 3]: PASS
-   
+
    ## Notes
+
    - All acceptance criteria verified
    - Ready for approval
    ```
@@ -389,23 +426,29 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 **Objective:** Get sign-off before committing and creating PR.
 
 **Process:**
+
 1. **Create approval summary:**
+
    ```markdown
    # Ready for Approval - [TICKET_ID]
-   
+
    ## What Was Implemented
+
    - [Summary from Phase 6]
-   
+
    ## Acceptance Criteria - ALL MET ✅
+
    - ✅ Criterion 1
    - ✅ Criterion 2
    - ✅ Criterion 3
-   
+
    ## Testing
+
    - All tests pass ✅
    - Ready for code review
-   
+
    ## Approval Question
+
    Do you approve proceeding to PR creation? (YES/NO)
    ```
 
@@ -424,46 +467,50 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 **Objective:** Finalize commits and create GitHub PR.
 
 **Process:**
+
 1. **Final commit:**
+
    ```bash
    git add .
    git commit -m "feat(JNF-[ID]): [Ticket Title]
 
    Complete implementation of [TICKET_ID].
-   
+
    All acceptance criteria met:
    - Criterion 1
    - Criterion 2
    - Criterion 3
-   
+
    Closes JNF-[ID]"
    ```
 
 2. **Push branch:**
+
    ```bash
    git push origin feature/JNF-[ID]-[title]
    ```
 
 3. **Create PR on GitHub:**
+
    ```
    Title: [TICKET_ID] - [Ticket Title]
-   
+
    Body:
    ## Description
    Implementation of [TICKET_ID]: [Ticket Title]
-   
+
    ## Type of Change
    - [ ] New Feature
    - [ ] Bug Fix
    - [ ] Performance Improvement
    - [ ] Documentation Update
-   
+
    ## Testing
    All acceptance criteria verified:
    - ✅ Criterion 1
    - ✅ Criterion 2
    - ✅ Criterion 3
-   
+
    ## Related Issue
    Closes #[JIRA_TICKET_ID] ([Ticket Title])
    ```
@@ -483,20 +530,23 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 **Objective:** Post PR details to JIRA and transition status to "In Review".
 
 **Process:**
+
 1. **Create PR details comment:**
+
    ```markdown
    **[PR Created - Awaiting Review]**
-   
+
    GitHub PR: #[PR_NUMBER]
    Branch: feature/JNF-[ID]-[title]
-   
+
    All acceptance criteria verified ✅
    Ready for code review.
-   
+
    [Link to PR on GitHub]
    ```
 
 2. **Post comment to JIRA** using MCP:
+
    ```
    mcp_atlassian_addCommentToJiraIssue(
      cloudId: "https://ndisapppoc.atlassian.net",
@@ -506,6 +556,7 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
    ```
 
 3. **Transition JIRA status to "In Review"** using MCP:
+
    ```
    mcp_atlassian_transitionJiraIssue(
      cloudId: "https://ndisapppoc.atlassian.net",
@@ -530,30 +581,34 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 **Objective:** Wait for PR merge, post completion comment, and close ticket.
 
 **Process:**
+
 1. **Await PR merge:**
    - Code review completed
    - PR approved by reviewers
    - PR merged to main branch
 
 2. **Confirm merge:**
+
    ```markdown
    PR #[PR_NUMBER] has been merged to main ✅
    ```
 
 3. **Create completion comment:**
+
    ```markdown
    **[Implementation Complete - PR Merged]**
-   
+
    PR #[PR_NUMBER] successfully merged to main branch.
-   
+
    ✅ All acceptance criteria met
    ✅ Code reviewed and approved
    ✅ PR merged
-   
+
    Implementation complete. Story ready for closure.
    ```
 
 4. **Post completion comment to JIRA** using MCP:
+
    ```
    mcp_atlassian_addCommentToJiraIssue(
      cloudId: "https://ndisapppoc.atlassian.net",
@@ -563,6 +618,7 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
    ```
 
 5. **Transition JIRA status to "Done"** using MCP:
+
    ```
    mcp_atlassian_transitionJiraIssue(
      cloudId: "https://ndisapppoc.atlassian.net",
@@ -590,23 +646,24 @@ This system provides a **complete, end-to-end workflow** for actioning JIRA user
 
 In each phase, comments are used for:
 
-| Phase | How Comments Used |
-|-------|-------------------|
-| 1 | Display all comments to user for context |
-| 2 | Inform branch naming conventions (if mentioned) |
-| 3 | Extract requirements + constraints from comments |
-| 4 | Identify referenced documentation |
-| 5 | Summarize comment parsing in methodology post |
-| 6 | Guide implementation per comment guidance |
-| 7 | Verify acceptance criteria mentioned in comments |
-| 8 | Confirm implementation follows comment approach |
-| 9-11 | Reference comment guidance in PR description |
+| Phase | How Comments Used                                |
+| ----- | ------------------------------------------------ |
+| 1     | Display all comments to user for context         |
+| 2     | Inform branch naming conventions (if mentioned)  |
+| 3     | Extract requirements + constraints from comments |
+| 4     | Identify referenced documentation                |
+| 5     | Summarize comment parsing in methodology post    |
+| 6     | Guide implementation per comment guidance        |
+| 7     | Verify acceptance criteria mentioned in comments |
+| 8     | Confirm implementation follows comment approach  |
+| 9-11  | Reference comment guidance in PR description     |
 
 ### Comment Parsing Algorithm
 
 For each comment in the ticket:
 
 1. **Extract author + timestamp**
+
    ```
    Author: [Name]
    Date: [ISO Date]
@@ -620,6 +677,7 @@ For each comment in the ticket:
    - Questions (clarifications needed)
 
 3. **Extract key points:**
+
    ```
    For each paragraph:
    - Is this a requirement? → Add to requirements list
@@ -629,17 +687,21 @@ For each comment in the ticket:
    ```
 
 4. **Create structured summary:**
+
    ```markdown
    Comment 1: [Author] - [Type]
-   
+
    Key Requirements:
+
    - [Requirement 1]
    - [Requirement 2]
-   
+
    Key Constraints:
+
    - [Constraint 1]
-   
+
    Documentation References:
+
    - [Doc 1]
    ```
 
@@ -652,6 +714,7 @@ For each comment in the ticket:
 ### Example: Comment Parsing for JNF-2
 
 **Comment 1: Solution Notes**
+
 ```
 Extract:
 - Type: Solution Guidance
@@ -661,6 +724,7 @@ Extract:
 ```
 
 **Comment 2: Monorepo bootstrap key considerations**
+
 ```
 Extract:
 - Type: Detailed Implementation Guidance
@@ -670,6 +734,7 @@ Extract:
 ```
 
 **Use in workflow:**
+
 - Phase 3: Parse all 16 guidance areas
 - Phase 4: Create playbook with 16 implementation steps
 - Phase 5: Comment mentions "comment parsing complete, 16 guidance areas extracted"
@@ -763,26 +828,32 @@ Status: IN DEVELOPMENT (Phase 5 of 11)
 Started: [Date/Time]
 
 ## Comment Parsing Complete
+
 ✅ All ticket comments reviewed
 ✅ Key constraints identified:
-   - [Constraint 1 from comments]
-   - [Constraint 2 from comments]
-   - [Constraint 3 from comments]
+
+- [Constraint 1 from comments]
+- [Constraint 2 from comments]
+- [Constraint 3 from comments]
 
 ✅ Documentation references extracted:
-   - [Doc 1]
-   - [Doc 2]
+
+- [Doc 1]
+- [Doc 2]
 
 ## Phases 1-4 Complete
+
 - ✅ Phase 1: Story presented & confirmed
 - ✅ Phase 2: Feature branch created
 - ✅ Phase 3: Story analyzed using comments
 - ✅ Phase 4: Documentation reviewed
 
 ## Implementation Playbook
+
 [Phase 4 playbook steps]
 
 ## Next: Phase 6 Implementation
+
 Ready to proceed with implementation per above playbook.
 ```
 
@@ -828,6 +899,7 @@ Closes [TICKET_ID] - [Ticket Title]
 **Symptom:** "JNF-[ID] not found in JIRA"
 
 **Recovery:**
+
 1. Double-check ticket ID (case matters: "JNF-2" not "jnf-2")
 2. Verify ticket exists in JIRA UI
 3. Confirm Cloud ID is correct: `https://ndisapppoc.atlassian.net`
@@ -838,6 +910,7 @@ Closes [TICKET_ID] - [Ticket Title]
 **Symptom:** "Cannot connect to JIRA MCP"
 
 **Recovery:**
+
 1. Verify GitHub Copilot has MCP tools activated
 2. Check Cloud ID format: Must be full URL
 3. Verify JIRA instance is accessible
@@ -848,6 +921,7 @@ Closes [TICKET_ID] - [Ticket Title]
 **Symptom:** Phase 7 tests fail
 
 **Recovery:**
+
 1. Identify which criterion failed
 2. Review comment guidance for that criterion
 3. Go back to Phase 6
@@ -860,6 +934,7 @@ Closes [TICKET_ID] - [Ticket Title]
 **Symptom:** "Failed to post comment to [TICKET_ID]"
 
 **Recovery:**
+
 1. Verify MCP comment tool is active
 2. Check JIRA permissions (must be able to comment)
 3. Retry in 10 seconds
@@ -870,6 +945,7 @@ Closes [TICKET_ID] - [Ticket Title]
 **Symptom:** "Cannot transition [TICKET_ID] to [STATUS]"
 
 **Recovery:**
+
 1. Check available transitions for ticket:
    ```
    mcp_atlassian_getTransitionsForJiraIssue(
@@ -887,10 +963,11 @@ Closes [TICKET_ID] - [Ticket Title]
 ### To Action a User Story:
 
 1. **Say to GitHub Copilot:**
+
    ```
    Load the JIRA User Story Actioning System from:
    Documentation/JIRA-USER-STORY-SYSTEM-PROMPT.md
-   
+
    I want to action user story [JNF-ID]
    ```
 
@@ -909,20 +986,20 @@ Closes [TICKET_ID] - [Ticket Title]
 
 ## 📊 MCP Operations Summary
 
-| Phase | MCP Calls | Operations |
-|-------|-----------|-----------|
-| 1 | 1 | Fetch ticket (+ all comments) |
-| 2 | 0 | None |
-| 3 | 0 | None |
-| 4 | 0 | None |
-| 5 | 1 | Post methodology comment |
-| 6 | 0 | None |
-| 7 | 0 | None |
-| 8 | 0 | None |
-| 9 | 0 | None |
-| 10 | 2 | Post PR comment + transition status |
-| 11 | 2 | Post completion comment + close ticket |
-| **TOTAL** | **7** | 1 fetch + 5 comments + 2 transitions |
+| Phase     | MCP Calls | Operations                             |
+| --------- | --------- | -------------------------------------- |
+| 1         | 1         | Fetch ticket (+ all comments)          |
+| 2         | 0         | None                                   |
+| 3         | 0         | None                                   |
+| 4         | 0         | None                                   |
+| 5         | 1         | Post methodology comment               |
+| 6         | 0         | None                                   |
+| 7         | 0         | None                                   |
+| 8         | 0         | None                                   |
+| 9         | 0         | None                                   |
+| 10        | 2         | Post PR comment + transition status    |
+| 11        | 2         | Post completion comment + close ticket |
+| **TOTAL** | **7**     | 1 fetch + 5 comments + 2 transitions   |
 
 ---
 

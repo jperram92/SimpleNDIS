@@ -80,31 +80,31 @@ Component Architecture
 
 Foundations
 
-components/ui/* — design system primitives (Button, Input, Select, Dialog, Sheet, Tabs…)
+components/ui/\* — design system primitives (Button, Input, Select, Dialog, Sheet, Tabs…)
 
-components/form/* — form wrappers with RHF+Zod, FormField, FieldError, HelpText
+components/form/\* — form wrappers with RHF+Zod, FormField, FieldError, HelpText
 
-components/layout/* — AppShell, TopNav, SideNav, Breadcrumbs, SkipLinks, Footer
+components/layout/\* — AppShell, TopNav, SideNav, Breadcrumbs, SkipLinks, Footer
 
-components/feedback/* — Alert, Toast, EmptyState, Loading, Skeleton
+components/feedback/\* — Alert, Toast, EmptyState, Loading, Skeleton
 
-components/data/* — DataTable (virtualized), Badge, Tag, StatusPill, KeyValue
+components/data/\* — DataTable (virtualized), Badge, Tag, StatusPill, KeyValue
 
-components/accessibility/* — VisuallyHidden, LiveRegion, FocusTrap
+components/accessibility/\* — VisuallyHidden, LiveRegion, FocusTrap
 
 Domain Components
 
-participants/* — ProfileCard, ConsentBanner, BudgetSummary
+participants/\* — ProfileCard, ConsentBanner, BudgetSummary
 
-agreements/* — AgreementHeader, SaliTable, BudgetGuard
+agreements/\* — AgreementHeader, SaliTable, BudgetGuard
 
-scheduler/* — CalendarGrid, ResourceLane, CandidateDrawer, TravelEstimator
+scheduler/\* — CalendarGrid, ResourceLane, CandidateDrawer, TravelEstimator
 
-timesheets/* — TimesheetForm, LineItemList, CalcBreakdown
+timesheets/\* — TimesheetForm, LineItemList, CalcBreakdown
 
-claims/* — ClaimList, ExportStatus, ReversalBanner
+claims/\* — ClaimList, ExportStatus, ReversalBanner
 
-invoices/* — InvoiceViewer (PDF), PaymentStatus
+invoices/\* — InvoiceViewer (PDF), PaymentStatus
 
 Patterns
 
@@ -172,7 +172,7 @@ Strict TypeScript types for server data; never trust client input.
 
 Mask PII (e.g., ndisNumber) by default; reveal with explicit role.
 
-No secrets in client bundle; runtime config via safe NEXT_PUBLIC_* whitelist only.
+No secrets in client bundle; runtime config via safe NEXT*PUBLIC*\* whitelist only.
 
 CSP: disallow unsafe-inline; set frame-ancestors 'none' except portal domains.
 
@@ -200,15 +200,15 @@ Conventional Commits; preview deployments per PR.
 
 PR Checklist (must pass):
 
- A11y reviewed (keyboard, screen reader, color contrast)
+A11y reviewed (keyboard, screen reader, color contrast)
 
- Tests added/updated (unit + story + e2e if applicable)
+Tests added/updated (unit + story + e2e if applicable)
 
- Performance check (bundle impact noted)
+Performance check (bundle impact noted)
 
- Observability (errors caught; user-safe messages)
+Observability (errors caught; user-safe messages)
 
- Docs updated (README/ADR/Storybook notes)
+Docs updated (README/ADR/Storybook notes)
 
 Deliverables (each vertical slice)
 
