@@ -1,0 +1,29 @@
+{
+  "name": "@ndis/database",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NDIS Database Client & Schema",
+  "main": "dist/client.js",
+  "module": "dist/client.mjs",
+  "types": "dist/client.d.ts",
+  "scripts": {
+    "build": "tsc && echo 'Database build complete'",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "node prisma/seed.js",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "dependencies": {
+    "@prisma/client": "^5.7.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.7.0",
+    "typescript": "^5.3.3",
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "@ndis/eslint-config": "*"
+  }
+}
