@@ -37,6 +37,14 @@
     },
     "db:seed": {
       "cache": false
+    },
+    "format": {
+      "outputs": [],
+      "cache": false
+    },
+    "format:check": {
+      "outputs": [],
+      "cache": false
     }
   }
 }
