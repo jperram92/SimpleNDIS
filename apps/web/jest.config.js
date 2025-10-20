@@ -14,9 +14,10 @@ const customJestConfig = {
   moduleNameMapper: {
     // Handle module aliases (this will be automatically configured for you based on your tsconfig.json paths)
     '^@/(.*)$': '<rootDir>/src/$1',
-    // Workspace package mappings - point to built dist files
-    '^@ndis/(.*)$': '<rootDir>/../../packages/$1/dist/index.js',
+    // Map workspace packages to their manual mocks
+    '^@ndis/database$': '<rootDir>/src/__mocks__/@ndis/database.ts',
   },
+  moduleDirectories: ['node_modules', '<rootDir>/../../node_modules'],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.d.ts',

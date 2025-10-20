@@ -63,18 +63,6 @@ jest.mock('@auth/prisma-adapter', () => ({
   })),
 }));
 
-// Mock database
-jest.mock('@ndis/database', () => ({
-  prisma: {
-    user: {
-      findUnique: jest.fn(),
-      create: jest.fn(),
-      update: jest.fn(),
-      delete: jest.fn(),
-    },
-  },
-}));
-
 // Mock password utilities
 jest.mock('./src/lib/utils/password', () => ({
   hashPassword: jest.fn(() => Promise.resolve(`hashed-${Date.now()}-${Math.random()}`)),
