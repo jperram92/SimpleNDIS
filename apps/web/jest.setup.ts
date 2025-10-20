@@ -26,6 +26,7 @@ jest.mock('next-auth/react', () => ({
   signIn: jest.fn(),
   signOut: jest.fn(),
   getSession: jest.fn(),
+  getCsrfToken: jest.fn(),
   SessionProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
@@ -70,7 +71,8 @@ jest.mock('./src/lib/utils/password', () => ({
     // Simple mock logic: return true if password matches hash pattern, false otherwise
     if (!password || !hash) return Promise.resolve(false);
     if (hash === 'invalid-hash') return Promise.resolve(false);
-    if (password === 'wrongPassword' || password === '' || password === 'wrong') return Promise.resolve(false);
+    if (password === 'wrongPassword' || password === '' || password === 'wrong')
+      return Promise.resolve(false);
     return Promise.resolve(true);
   }),
 }));

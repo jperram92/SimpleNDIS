@@ -2,23 +2,19 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SignIn from '../../app/auth/signin/page';
-import { signIn, getSession } from 'next-auth/react';
+import { signIn, getSession, getCsrfToken } from 'next-auth/react';
 
 // Mock next-auth
 const mockSignIn = signIn as jest.MockedFunction<typeof signIn>;
 const mockGetSession = getSession as jest.MockedFunction<typeof getSession>;
-
-// Mock fetch for CSRF token
-const mockFetch = global.fetch as jest.MockedFunction<typeof global.fetch>;
+const mockGetCsrfToken = getCsrfToken as jest.MockedFunction<typeof getCsrfToken>;
 
 describe('SignIn Integration Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
     // Mock successful CSRF token fetch
-    mockFetch.mockResolvedValue({
-      json: () => Promise.resolve({ csrfToken: 'test-csrf-token-123' }),
-    } as Response);
+    mockGetCsrfToken.mockResolvedValue('test-csrf-token-123');
 
     // Mock successful signin
     mockSignIn.mockResolvedValue({
@@ -45,7 +41,7 @@ describe('SignIn Integration Tests', () => {
 
     // Wait for CSRF token to be fetched
     await waitFor(() => {
-      expect(mockFetch).toHaveBeenCalledWith('/api/csrf-token');
+      expect(mockGetCsrfToken).toHaveBeenCalled();
     });
 
     expect(screen.getByLabelText(/email address/i)).toBeInTheDocument();
@@ -58,7 +54,7 @@ describe('SignIn Integration Tests', () => {
     render(<SignIn />);
 
     await waitFor(() => {
-      expect(mockFetch).toHaveBeenCalledWith('/api/csrf-token');
+      expect(mockGetCsrfToken).toHaveBeenCalled();
     });
   });
 
@@ -68,7 +64,7 @@ describe('SignIn Integration Tests', () => {
 
     // Wait for CSRF token to be fetched
     await waitFor(() => {
-      expect(mockFetch).toHaveBeenCalledWith('/api/csrf-token');
+      expect(mockGetCsrfToken).toHaveBeenCalled();
     });
 
     // Fill in the form
@@ -80,12 +76,11 @@ describe('SignIn Integration Tests', () => {
     await user.type(passwordInput, 'ValidPass123!');
     await user.click(submitButton);
 
-    // Verify signIn was called with correct parameters including CSRF token
+    // Verify signIn was called with correct parameters
     await waitFor(() => {
       expect(mockSignIn).toHaveBeenCalledWith('credentials', {
         email: 'test@example.com',
         password: 'ValidPass123!',
-        csrfToken: 'test-csrf-token-123',
         redirect: false,
       });
     });
@@ -96,7 +91,7 @@ describe('SignIn Integration Tests', () => {
 
   it('should handle CSRF token fetch failure', async () => {
     // Mock failed CSRF token fetch
-    mockFetch.mockRejectedValueOnce(new Error('Network error'));
+    mockGetCsrfToken.mockRejectedValueOnce(new Error('Network error'));
 
     render(<SignIn />);
 
@@ -112,13 +107,13 @@ describe('SignIn Integration Tests', () => {
     expect(submitButton).toBeDisabled();
   });
 
-  it('should include CSRF token in form submission', async () => {
+  it('should include CSRF token in form and handle submission', async () => {
     const user = userEvent.setup();
     render(<SignIn />);
 
-    // Wait for CSRF token to be fetched
+    // Wait for initial CSRF token fetch
     await waitFor(() => {
-      expect(mockFetch).toHaveBeenCalledWith('/api/csrf-token');
+      expect(mockGetCsrfToken).toHaveBeenCalled();
     });
 
     // Fill in the form
@@ -130,10 +125,16 @@ describe('SignIn Integration Tests', () => {
     await user.type(passwordInput, 'ValidPass123!');
     await user.click(submitButton);
 
-    // Verify CSRF token is included in the signin call
-    await waitFor(() => {
-      const signInCall = mockSignIn.mock.calls[0][1];
-      expect(signInCall).toHaveProperty('csrfToken', 'test-csrf-token-123');
+    // Verify CSRF token is included in the form as hidden input
+    const csrfInput = screen.getByDisplayValue('test-csrf-token-123');
+    expect(csrfInput).toHaveAttribute('type', 'hidden');
+    expect(csrfInput).toHaveAttribute('name', 'csrfToken');
+
+    // Verify signIn was called without csrfToken parameter (NextAuth handles it automatically)
+    expect(mockSignIn).toHaveBeenCalledWith('credentials', {
+      email: 'test@example.com',
+      password: 'ValidPass123!',
+      redirect: false,
     });
   });
 });
