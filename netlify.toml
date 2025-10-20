@@ -7,9 +7,8 @@
   NODE_VERSION = "18"
   NEXT_PRIVATE_SKIP_STANDALONE_BUILD = "true"
 
-# Temporarily disable Next.js plugin to avoid standalone build issues
-# [[plugins]]
-#   package = "@netlify/plugin-nextjs"
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [[redirects]]
   from = "/api/*"
