@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Mock the CSRF utilities before importing
 jest.mock('../../lib/csrf', () => ({
   generateCSRFToken: jest.fn(() => 'test-csrf-token-123'),

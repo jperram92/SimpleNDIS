@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { validateInput, loginSchema } from '../validation';
 
 // Mock the rate limiting functions since they depend on Next.js types

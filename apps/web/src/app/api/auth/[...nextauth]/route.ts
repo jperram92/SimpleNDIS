@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import { authOptions } from '../../../../lib/auth';
 import { authRateLimit } from '../../../../lib/rate-limit';
 import { csrfProtection } from '../../../../lib/csrf';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 // Create the NextAuth handler for app router
 const {
@@ -10,7 +10,10 @@ const {
 } = NextAuth(authOptions);
 
 // Rate-limited and CSRF-protected wrapper for authentication endpoints
-async function protectedHandler(request: NextRequest, handler: any) {
+async function protectedHandler(
+  request: NextRequest,
+  handler: (req: NextRequest) => Promise<NextResponse>,
+): Promise<NextResponse> {
   // Apply rate limiting first
   const rateLimitResult = await authRateLimit(request);
   if (rateLimitResult instanceof Response) {
