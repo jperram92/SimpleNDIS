@@ -12,6 +12,8 @@ let handlers: {
 };
 try {
   const nextAuthResult = NextAuth(authOptions);
+  console.log('NextAuth result keys:', Object.keys(nextAuthResult || {}));
+  console.log('NextAuth result:', nextAuthResult);
   handlers = nextAuthResult.handlers;
   if (!handlers) {
     throw new Error('NextAuth handlers not initialized');
