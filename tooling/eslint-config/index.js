@@ -2,6 +2,13 @@ module.exports = {
   extends: ['eslint:recommended'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
+  env: {
+    node: true,
+    es2020: true,
+  },
+  globals: {
+    globalThis: 'readonly',
+  },
   rules: {
     '@typescript-eslint/no-explicit-any': 'warn',
   },
