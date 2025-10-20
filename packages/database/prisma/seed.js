@@ -10,7 +10,31 @@ const prisma = new PrismaClient();
 
 async function main() {
   // Create test users
-  const adminPassword = await hashPassword('admin123');
+  const testPassword = await hashPassword('TestPassword123!');
+  const adminPassword = await hashPassword('AdminPassword123!');
+
+  const testUser = await prisma.user.upsert({
+    where: { email: 'test@example.com' },
+    update: {},
+    create: {
+      email: 'test@example.com',
+      name: 'Test User',
+      password: testPassword,
+      role: 'SUPPORT_WORKER',
+    },
+  });
+
+  const adminTest = await prisma.user.upsert({
+    where: { email: 'admin@example.com' },
+    update: {},
+    create: {
+      email: 'admin@example.com',
+      name: 'Admin Test',
+      password: adminPassword,
+      role: 'ADMIN',
+    },
+  });
+
   const userPassword = await hashPassword('user123');
 
   const admin = await prisma.user.upsert({
@@ -57,7 +81,14 @@ async function main() {
     },
   });
 
-  console.log('Seed data created:', { admin, supportWorker, finance, scheduler });
+  console.log('Seed data created:', {
+    testUser,
+    adminTest,
+    admin,
+    supportWorker,
+    finance,
+    scheduler,
+  });
 }
 
 main()

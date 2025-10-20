@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { signIn, getSession } from 'next-auth/react';
+import { signIn, getSession, getCsrfToken } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 export default function SignIn() {
@@ -16,9 +16,8 @@ export default function SignIn() {
   useEffect(() => {
     const fetchCsrfToken = async () => {
       try {
-        const response = await fetch('/api/csrf-token');
-        const data = await response.json();
-        setCsrfToken(data.csrfToken);
+        const token = await getCsrfToken();
+        setCsrfToken(token || '');
       } catch (error) {
         console.error('Failed to fetch CSRF token:', error);
         setError('Failed to initialize security token. Please refresh the page.');
@@ -43,7 +42,6 @@ export default function SignIn() {
       const result = await signIn('credentials', {
         email,
         password,
-        csrfToken, // Include CSRF token
         redirect: false,
       });
 

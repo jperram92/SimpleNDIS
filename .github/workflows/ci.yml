@@ -132,6 +132,9 @@ jobs:
       - name: Build application
         run: pnpm build
 
+      - name: Setup database
+        run: pnpm db:migrate && pnpm db:seed
+
       - name: Install Playwright Browsers
         run: cd apps/web && npx playwright install --with-deps
 
@@ -195,6 +198,9 @@ jobs:
       - name: Build application
         run: pnpm build
 
+      - name: Setup database
+        run: pnpm db:migrate && pnpm db:seed
+
       - name: Install Playwright Browsers
         run: cd apps/web && npx playwright install --with-deps
 
@@ -257,6 +263,9 @@ jobs:
 
       - name: Build application
         run: pnpm build
+
+      - name: Setup database
+        run: pnpm db:migrate && pnpm db:seed
 
       - name: Install Playwright Browsers
         run: cd apps/web && npx playwright install --with-deps

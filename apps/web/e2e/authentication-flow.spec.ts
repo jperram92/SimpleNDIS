@@ -19,7 +19,7 @@ test.describe('Authentication Flow Testing', () => {
 
     // Check that CSRF token is present (either in form or as hidden input)
     const csrfInput = page.locator('input[name="csrfToken"]');
-    await expect(csrfInput).toBeVisible();
+    await expect(csrfInput).toHaveValue(/.+/);
   });
 
   test('should handle invalid credentials gracefully', async ({ page }) => {
@@ -40,7 +40,9 @@ test.describe('Authentication Flow Testing', () => {
     await expect(errorMessage).toBeVisible();
   });
 
-  test('should redirect authenticated users to appropriate dashboard based on role', async ({ page }) => {
+  test('should redirect authenticated users to appropriate dashboard based on role', async ({
+    page,
+  }) => {
     // This test would require setting up test users with different roles
     // For now, we'll test the basic flow structure
 

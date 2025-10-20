@@ -5,7 +5,6 @@ import { prisma } from '@ndis/database';
 import { verifyPassword } from './utils/password';
 import { jwtCallback, sessionCallback } from './callbacks';
 import { loginSchema, sanitizeEmail, validateInput } from './validation';
-import { validateAuthCSRFToken } from './csrf';
 
 export const authOptions: NextAuthOptions = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,18 +15,10 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
-        csrfToken: { label: 'CSRF Token', type: 'text' },
       },
       async authorize(credentials) {
         // Input validation and sanitization
-        if (!credentials?.email || !credentials?.password || !credentials?.csrfToken) {
-          return null;
-        }
-
-        // Validate CSRF token first
-        const isValidCSRF = validateAuthCSRFToken(credentials.csrfToken);
-        if (!isValidCSRF) {
-          console.warn('Invalid CSRF token');
+        if (!credentials?.email || !credentials?.password) {
           return null;
         }
 

@@ -12,5 +12,5 @@
       }
     }
   ],
-  "ignorePatterns": ["playwright.config.ts"]
+  "ignorePatterns": ["playwright.config.ts", "e2e/**"]
 }

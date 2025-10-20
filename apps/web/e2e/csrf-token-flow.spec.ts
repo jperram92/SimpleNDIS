@@ -10,7 +10,7 @@ test.describe('CSRF Token Flow E2E Tests', () => {
 
     // Check that CSRF token input exists and has a value
     const csrfInput = page.locator('input[name="csrfToken"]');
-    await expect(csrfInput).toBeVisible();
+    await expect(csrfInput).toHaveValue(/.+/);
 
     // Verify CSRF token is not empty
     const csrfTokenValue = await csrfInput.inputValue();
@@ -35,11 +35,13 @@ test.describe('CSRF Token Flow E2E Tests', () => {
 
   test('should handle CSRF token fetch failure gracefully', async ({ page }) => {
     // Mock the CSRF API to return an error
-    await page.route('/api/csrf-token', route => route.fulfill({
-      status: 500,
-      contentType: 'application/json',
-      body: JSON.stringify({ error: 'Internal server error' })
-    }));
+    await page.route('/api/auth/csrf', (route) =>
+      route.fulfill({
+        status: 500,
+        contentType: 'application/json',
+        body: JSON.stringify({ error: 'Internal server error' }),
+      })
+    );
 
     // Navigate to signin page
     await page.goto('/auth/signin');
@@ -113,7 +115,7 @@ test.describe('CSRF Token Flow E2E Tests', () => {
 
   test('should handle network errors during CSRF token fetch', async ({ page }) => {
     // Mock network failure for CSRF API
-    await page.route('/api/csrf-token', route => route.abort());
+    await page.route('/api/auth/csrf', (route) => route.abort());
 
     // Navigate to signin page
     await page.goto('/auth/signin');
