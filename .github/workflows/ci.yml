@@ -92,7 +92,7 @@ jobs:
     env:
       NEXTAUTH_SECRET: e2e-test-secret-key-change-in-production-never-use-in-prod
       NEXTAUTH_URL: http://localhost:3000
-      DATABASE_URL: file:./test.db
+      DATABASE_URL: file:./test-chromium.db
 
     steps:
       - name: Checkout code
@@ -155,7 +155,7 @@ jobs:
     env:
       NEXTAUTH_SECRET: e2e-test-secret-key-change-in-production-never-use-in-prod
       NEXTAUTH_URL: http://localhost:3000
-      DATABASE_URL: file:./test.db
+      DATABASE_URL: file:./test-firefox.db
 
     steps:
       - name: Checkout code
@@ -218,7 +218,7 @@ jobs:
     env:
       NEXTAUTH_SECRET: e2e-test-secret-key-change-in-production-never-use-in-prod
       NEXTAUTH_URL: http://localhost:3000
-      DATABASE_URL: file:./test.db
+      DATABASE_URL: file:./test-webkit.db
 
     steps:
       - name: Checkout code
