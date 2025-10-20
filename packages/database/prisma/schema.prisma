@@ -50,6 +50,7 @@ model User {
 
   accounts Account[]
   sessions Session[]
+  auditEvents AuditEvent[]
 }
 
 model VerificationToken {
@@ -58,4 +59,17 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model AuditEvent {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String
+  resource  String
+  details   String?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
 }
