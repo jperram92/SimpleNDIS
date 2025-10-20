@@ -181,6 +181,9 @@ importers:
       '@ndis/eslint-config':
         specifier: '*'
         version: link:../../tooling/eslint-config
+      '@types/node':
+        specifier: ^20.10.0
+        version: 20.19.22
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.0
         version: 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.57.1)(typescript@5.9.3)
