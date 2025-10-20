@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
+export const dynamic = 'force-dynamic';
+
 // Simple in-memory CSRF token store
 const csrfTokens = new Map<string, { token: string; expires: number }>();
 const CSRF_TOKEN_EXPIRY = 60 * 60 * 1000; // 1 hour
