@@ -7,7 +7,7 @@
   "module": "dist/client.mjs",
   "types": "dist/client.d.ts",
   "scripts": {
-    "build": "tsc && echo 'Database build complete'",
+    "build": "prisma generate && tsc && echo 'Database build complete'",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "node prisma/seed.js",
     "lint": "eslint src --ext .ts",
@@ -16,15 +16,17 @@
     "format:check": "prettier --check \"src/**/*.ts\""
   },
   "dependencies": {
-    "@prisma/client": "^5.7.0"
+    "@prisma/client": "^5.7.0",
+    "bcrypt": "^6.0.0"
   },
   "devDependencies": {
-    "prisma": "^5.7.0",
-    "typescript": "^5.3.3",
-    "eslint": "^8.55.0",
-    "prettier": "^3.1.0",
+    "@ndis/eslint-config": "*",
+    "@types/node": "^20.10.0",
     "@typescript-eslint/eslint-plugin": "^6.13.0",
     "@typescript-eslint/parser": "^6.13.0",
-    "@ndis/eslint-config": "*"
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.0",
+    "prisma": "^5.7.0",
+    "typescript": "^5.3.3"
   }
 }

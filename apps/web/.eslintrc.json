@@ -1,4 +1,16 @@
 {
   "extends": ["@ndis/eslint-config", "next/core-web-vitals"],
-  "root": true
+  "root": true,
+  "overrides": [
+    {
+      "files": ["jest.setup.ts"],
+      "env": {
+        "jest": true
+      },
+      "globals": {
+        "React": "readonly"
+      }
+    }
+  ],
+  "ignorePatterns": ["playwright.config.ts", "e2e/**"]
 }

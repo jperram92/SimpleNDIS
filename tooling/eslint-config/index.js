@@ -2,6 +2,13 @@ module.exports = {
   extends: ['eslint:recommended'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
+  env: {
+    node: true,
+    es2020: true,
+  },
+  globals: {
+    globalThis: 'readonly',
+  },
   rules: {
     '@typescript-eslint/no-explicit-any': 'warn',
   },
@@ -32,6 +39,12 @@ module.exports = {
         react: {
           version: 'detect',
         },
+      },
+    },
+    {
+      files: ['**/__tests__/**/*.{js,jsx,ts,tsx}', '**/*.{test,spec}.{js,jsx,ts,tsx}', '**/__mocks__/**/*.{js,jsx,ts,tsx}'],
+      env: {
+        jest: true,
       },
     },
   ],
