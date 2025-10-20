@@ -11,5 +11,6 @@
         "React": "readonly"
       }
     }
-  ]
+  ],
+  "ignorePatterns": ["playwright.config.ts"]
 }
