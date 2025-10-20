@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Disable standalone build to avoid Windows symlink issues
+  experimental: {
+    serverComponentsExternalPackages: [],
+  },
+
   // Security headers
   async headers() {
     return [

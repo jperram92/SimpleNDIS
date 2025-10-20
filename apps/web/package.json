@@ -5,7 +5,7 @@
   "description": "NDIS Web Application - Next.js 14",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "NEXT_PRIVATE_SKIP_STANDALONE_BUILD=true next build",
     "start": "next start",
     "lint": "eslint src --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
