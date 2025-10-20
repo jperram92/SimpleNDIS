@@ -83,11 +83,11 @@ jobs:
           files: ./coverage/coverage-final.json
           flags: unittests
 
-  e2e-tests:
-    name: E2E Tests
+  e2e-chromium:
+    name: E2E Tests (Chromium)
     runs-on: ubuntu-latest
     needs: build
-    timeout-minutes: 60
+    timeout-minutes: 30
 
     env:
       NEXTAUTH_SECRET: e2e-test-secret-key-change-in-production-never-use-in-prod
@@ -135,13 +135,139 @@ jobs:
       - name: Install Playwright Browsers
         run: cd apps/web && npx playwright install --with-deps
 
-      - name: Run Playwright tests
-        run: cd apps/web && npx playwright test
+      - name: Run Playwright tests (Chromium)
+        run: cd apps/web && npx playwright test --project=chromium
 
-      - name: Upload Playwright report
+      - name: Upload Playwright report (Chromium)
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-chromium
+          path: apps/web/playwright-report/
+          retention-days: 30
+
+  e2e-firefox:
+    name: E2E Tests (Firefox)
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 30
+
+    env:
+      NEXTAUTH_SECRET: e2e-test-secret-key-change-in-production-never-use-in-prod
+      NEXTAUTH_URL: http://localhost:3000
+      DATABASE_URL: file:./test.db
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Cache pnpm store
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-18-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-18-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build application
+        run: pnpm build
+
+      - name: Install Playwright Browsers
+        run: cd apps/web && npx playwright install --with-deps
+
+      - name: Run Playwright tests (Firefox)
+        run: cd apps/web && npx playwright test --project=firefox
+
+      - name: Upload Playwright report (Firefox)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-firefox
+          path: apps/web/playwright-report/
+          retention-days: 30
+
+  e2e-webkit:
+    name: E2E Tests (WebKit)
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 30
+
+    env:
+      NEXTAUTH_SECRET: e2e-test-secret-key-change-in-production-never-use-in-prod
+      NEXTAUTH_URL: http://localhost:3000
+      DATABASE_URL: file:./test.db
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Cache pnpm store
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-18-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-18-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build application
+        run: pnpm build
+
+      - name: Install Playwright Browsers
+        run: cd apps/web && npx playwright install --with-deps
+
+      - name: Run Playwright tests (WebKit)
+        run: cd apps/web && npx playwright test --project=webkit
+
+      - name: Upload Playwright report (WebKit)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-webkit
           path: apps/web/playwright-report/
           retention-days: 30
