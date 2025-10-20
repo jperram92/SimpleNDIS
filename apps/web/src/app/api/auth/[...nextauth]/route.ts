@@ -12,7 +12,7 @@ const {
 // Rate-limited and CSRF-protected wrapper for authentication endpoints
 async function protectedHandler(
   request: NextRequest,
-  handler: (req: NextRequest) => Promise<NextResponse>,
+  handler: (req: NextRequest) => Promise<NextResponse>
 ): Promise<NextResponse> {
   // Apply rate limiting first
   const rateLimitResult = await authRateLimit(request);

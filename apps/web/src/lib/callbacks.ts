@@ -11,13 +11,7 @@ export const jwtCallback = async ({ token, user }: { token: JWT; user?: User }) 
 };
 
 // Session callback for NextAuth
-export const sessionCallback = async ({
-  session,
-  token,
-}: {
-  session: Session;
-  token: JWT;
-}) => {
+export const sessionCallback = async ({ session, token }: { session: Session; token: JWT }) => {
   if (token && session.user && token.sub) {
     session.user.id = token.sub;
     session.user.role = token.role as string;
