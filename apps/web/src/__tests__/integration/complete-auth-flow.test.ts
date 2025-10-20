@@ -109,12 +109,14 @@ describe('Complete Authentication Flow Integration Tests', () => {
       } as any;
 
       // Simulate multiple concurrent requests
-      const promises = Array(5).fill(null).map(() => authRateLimit(mockReq));
+      const promises = Array(5)
+        .fill(null)
+        .map(() => authRateLimit(mockReq));
 
       const results = await Promise.all(promises);
 
       // All should succeed (within rate limits)
-      results.forEach(result => {
+      results.forEach((result) => {
         expect(result).toBeNull();
       });
     });

@@ -1,26 +1,20 @@
 import { withAuth } from 'next-auth/middleware';
 
-export default withAuth(
-  {
-    callbacks: {
-      authorized: ({ token, req }) => {
-        const { pathname } = req.nextUrl;
+export default withAuth({
+  callbacks: {
+    authorized: ({ token, req }) => {
+      const { pathname } = req.nextUrl;
 
-        // Public routes that don't require authentication
-        if (
-          pathname.startsWith('/auth/') ||
-          pathname === '/' ||
-          pathname.startsWith('/api/auth/')
-        ) {
-          return true;
-        }
+      // Public routes that don't require authentication
+      if (pathname.startsWith('/auth/') || pathname === '/' || pathname.startsWith('/api/auth/')) {
+        return true;
+      }
 
-        // All other routes require authentication
-        return !!token;
-      },
+      // All other routes require authentication
+      return !!token;
     },
-  }
-);
+  },
+});
 
 export const config = {
   matcher: [

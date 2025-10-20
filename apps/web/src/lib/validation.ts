@@ -13,7 +13,10 @@ export const passwordSchema = z
   .string()
   .min(8, 'Password must be at least 8 characters')
   .max(128, 'Password is too long')
-  .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 'Password must contain at least one lowercase letter, one uppercase letter, and one number');
+  .regex(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+    'Password must contain at least one lowercase letter, one uppercase letter, and one number'
+  );
 
 // Login credentials schema
 export const loginSchema = z.object({
@@ -22,14 +25,16 @@ export const loginSchema = z.object({
 });
 
 // Registration schema (if needed later)
-export const registerSchema = z.object({
-  email: emailSchema,
-  password: passwordSchema,
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ['confirmPassword'],
-});
+export const registerSchema = z
+  .object({
+    email: emailSchema,
+    password: passwordSchema,
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
 
 // Sanitization functions
 export const sanitizeEmail = (email: string): string => {
@@ -47,7 +52,7 @@ export const isRateLimited = (
   maxAttempts: number = 5
 ): boolean => {
   const now = Date.now();
-  const recentAttempts = attempts.filter(attempt => now - attempt < windowMs);
+  const recentAttempts = attempts.filter((attempt) => now - attempt < windowMs);
   return recentAttempts.length >= maxAttempts;
 };
 
@@ -69,6 +74,6 @@ export const validateInput = <T>(
 
   return {
     success: false,
-    errors: result.error.errors.map(err => err.message),
+    errors: result.error.errors.map((err) => err.message),
   };
 };

@@ -5,7 +5,9 @@ import { csrfProtection } from '../../../../lib/csrf';
 import { NextRequest } from 'next/server';
 
 // Create the NextAuth handler for app router
-export const { handlers: { GET: nextAuthGET, POST: nextAuthPOST } } = NextAuth(authOptions);
+export const {
+  handlers: { GET: nextAuthGET, POST: nextAuthPOST },
+} = NextAuth(authOptions);
 
 // Rate-limited and CSRF-protected wrapper for authentication endpoints
 async function protectedHandler(request: NextRequest, handler: any) {

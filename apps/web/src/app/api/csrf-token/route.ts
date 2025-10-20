@@ -29,7 +29,8 @@ export async function GET(request: NextRequest) {
     });
 
     // Set CSRF token as HttpOnly cookie
-    response.headers.set('Set-Cookie',
+    response.headers.set(
+      'Set-Cookie',
       `csrf-token=${csrfToken}; HttpOnly; Secure; SameSite=Strict; Max-Age=${CSRF_TOKEN_EXPIRY / 1000}`
     );
 
@@ -38,15 +39,15 @@ export async function GET(request: NextRequest) {
     response.headers.set('X-Frame-Options', 'DENY');
     response.headers.set('X-XSS-Protection', '1; mode=block');
     response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-    response.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:");
+    response.headers.set(
+      'Content-Security-Policy',
+      "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:"
+    );
     response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
 
     return response;
   } catch (error) {
     console.error('CSRF token generation error:', error);
-    return NextResponse.json(
-      { error: 'Failed to generate CSRF token' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to generate CSRF token' }, { status: 500 });
   }
 }

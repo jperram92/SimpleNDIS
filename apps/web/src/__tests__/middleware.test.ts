@@ -5,11 +5,7 @@ const authorizedCallback = ({ token, req }: { token: any; req: NextRequest }) =>
   const { pathname } = req.nextUrl;
 
   // Public routes that don't require authentication
-  if (
-    pathname.startsWith('/auth/') ||
-    pathname === '/' ||
-    pathname.startsWith('/api/auth/')
-  ) {
+  if (pathname.startsWith('/auth/') || pathname === '/' || pathname.startsWith('/api/auth/')) {
     return true;
   }
 

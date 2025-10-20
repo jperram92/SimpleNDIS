@@ -102,7 +102,9 @@ describe('SignIn Integration Tests', () => {
 
     // Wait for error message to appear
     await waitFor(() => {
-      expect(screen.getByText('Failed to initialize security token. Please refresh the page.')).toBeInTheDocument();
+      expect(
+        screen.getByText('Failed to initialize security token. Please refresh the page.')
+      ).toBeInTheDocument();
     });
 
     // Verify submit button is disabled

@@ -19,11 +19,7 @@ const defaultKeyGenerator = (req: NextRequest): string => {
 };
 
 export function rateLimit(options: RateLimitOptions) {
-  const {
-    windowMs,
-    maxRequests,
-    keyGenerator = defaultKeyGenerator,
-  } = options;
+  const { windowMs, maxRequests, keyGenerator = defaultKeyGenerator } = options;
 
   return async (req: NextRequest) => {
     const key = keyGenerator(req);
@@ -69,7 +65,8 @@ export function rateLimit(options: RateLimitOptions) {
     }
 
     // Clean up old entries periodically (simple cleanup)
-    if (Math.random() < 0.01) { // 1% chance to clean up
+    if (Math.random() < 0.01) {
+      // 1% chance to clean up
       for (const [k, v] of rateLimitStore.entries()) {
         if (now > v.resetTime) {
           rateLimitStore.delete(k);

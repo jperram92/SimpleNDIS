@@ -41,10 +41,7 @@ export function validateCSRFToken(sessionId: string, token: string): boolean {
   }
 
   // Use constant-time comparison to prevent timing attacks
-  return crypto.timingSafeEqual(
-    Buffer.from(token, 'hex'),
-    Buffer.from(stored.token, 'hex')
-  );
+  return crypto.timingSafeEqual(Buffer.from(token, 'hex'), Buffer.from(stored.token, 'hex'));
 }
 
 /**
@@ -65,10 +62,7 @@ export function validateAuthCSRFToken(token: string): boolean {
     }
 
     try {
-      if (crypto.timingSafeEqual(
-        Buffer.from(token, 'hex'),
-        Buffer.from(data.token, 'hex')
-      )) {
+      if (crypto.timingSafeEqual(Buffer.from(token, 'hex'), Buffer.from(data.token, 'hex'))) {
         return true;
       }
     } catch {
