@@ -18,7 +18,11 @@ try {
 }
 
 // Provide fallback handlers if NextAuth failed to initialize
-const GET = handlers.GET || (async () => NextResponse.json({ error: 'Auth service initializing' }, { status: 503 }));
-const POST = handlers.POST || (async () => NextResponse.json({ error: 'Auth service initializing' }, { status: 503 }));
+const GET =
+  handlers.GET ||
+  (async () => NextResponse.json({ error: 'Auth service initializing' }, { status: 503 }));
+const POST =
+  handlers.POST ||
+  (async () => NextResponse.json({ error: 'Auth service initializing' }, { status: 503 }));
 
 export { GET, POST };
