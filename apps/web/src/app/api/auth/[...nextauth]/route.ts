@@ -4,10 +4,22 @@ import { authRateLimit } from '../../../../lib/rate-limit';
 import { csrfProtection } from '../../../../lib/csrf';
 import { NextRequest, NextResponse } from 'next/server';
 
-// Create the NextAuth handler for app router
-const {
-  handlers: { GET: nextAuthGET, POST: nextAuthPOST },
-} = NextAuth(authOptions);
+// Lazy-load NextAuth handlers to ensure Prisma is initialized
+let cachedHandlers: {
+  GET: (req: NextRequest) => Promise<NextResponse>;
+  POST: (req: NextRequest) => Promise<NextResponse>;
+} | null = null;
+
+function getHandlers() {
+  if (!cachedHandlers) {
+    const { handlers } = NextAuth(authOptions);
+    cachedHandlers = handlers as {
+      GET: (req: NextRequest) => Promise<NextResponse>;
+      POST: (req: NextRequest) => Promise<NextResponse>;
+    };
+  }
+  return cachedHandlers;
+}
 
 // Rate-limited and CSRF-protected wrapper for authentication endpoints
 async function protectedHandler(
@@ -40,9 +52,11 @@ async function protectedHandler(
 }
 
 export async function GET(request: NextRequest) {
-  return protectedHandler(request, nextAuthGET);
+  const handlers = getHandlers();
+  return protectedHandler(request, handlers.GET);
 }
 
 export async function POST(request: NextRequest) {
-  return protectedHandler(request, nextAuthPOST);
+  const handlers = getHandlers();
+  return protectedHandler(request, handlers.POST);
 }

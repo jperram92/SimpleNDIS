@@ -7,7 +7,7 @@
   "module": "dist/client.mjs",
   "types": "dist/client.d.ts",
   "scripts": {
-    "build": "tsc && echo 'Database build complete'",
+    "build": "prisma generate && tsc && echo 'Database build complete'",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "node prisma/seed.js",
     "lint": "eslint src --ext .ts",
