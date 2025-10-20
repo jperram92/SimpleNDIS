@@ -12,11 +12,20 @@ let cachedHandlers: {
 
 function getHandlers() {
   if (!cachedHandlers) {
-    const { handlers } = NextAuth(authOptions);
-    cachedHandlers = handlers as {
-      GET: (req: NextRequest) => Promise<NextResponse>;
-      POST: (req: NextRequest) => Promise<NextResponse>;
-    };
+    try {
+      const { handlers } = NextAuth(authOptions);
+      if (!handlers?.GET || !handlers?.POST) {
+        console.error('NextAuth handlers not properly initialized');
+        throw new Error('NextAuth handlers not available');
+      }
+      cachedHandlers = handlers as {
+        GET: (req: NextRequest) => Promise<NextResponse>;
+        POST: (req: NextRequest) => Promise<NextResponse>;
+      };
+    } catch (error) {
+      console.error('Failed to initialize NextAuth handlers:', error);
+      throw error;
+    }
   }
   return cachedHandlers;
 }
@@ -52,11 +61,21 @@ async function protectedHandler(
 }
 
 export async function GET(request: NextRequest) {
-  const handlers = getHandlers();
-  return protectedHandler(request, handlers.GET);
+  try {
+    const handlers = getHandlers();
+    return protectedHandler(request, handlers.GET);
+  } catch (error) {
+    console.error('GET handler error:', error);
+    return NextResponse.json({ error: 'Authentication service unavailable' }, { status: 500 });
+  }
 }
 
 export async function POST(request: NextRequest) {
-  const handlers = getHandlers();
-  return protectedHandler(request, handlers.POST);
+  try {
+    const handlers = getHandlers();
+    return protectedHandler(request, handlers.POST);
+  } catch (error) {
+    console.error('POST handler error:', error);
+    return NextResponse.json({ error: 'Authentication service unavailable' }, { status: 500 });
+  }
 }
