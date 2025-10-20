@@ -6,9 +6,24 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Create the handlers with NextAuth - doing this at import time allows
 // the handlers to be properly initialized and cached by Next.js
-const { handlers } = NextAuth(authOptions);
-
-// Rate-limited and CSRF-protected wrapper for authentication endpoints
+let handlers: {
+  GET: (req: NextRequest) => Promise<NextResponse>;
+  POST: (req: NextRequest) => Promise<NextResponse>;
+};
+try {
+  const nextAuthResult = NextAuth(authOptions);
+  handlers = nextAuthResult.handlers;
+  if (!handlers) {
+    throw new Error('NextAuth handlers not initialized');
+  }
+} catch (error) {
+  console.error('Failed to initialize NextAuth handlers:', error);
+  // Fallback handlers for development/testing
+  handlers = {
+    GET: async () => NextResponse.json({ error: 'Auth service unavailable' }, { status: 503 }),
+    POST: async () => NextResponse.json({ error: 'Auth service unavailable' }, { status: 503 }),
+  };
+} // Rate-limited and CSRF-protected wrapper for authentication endpoints
 async function protectedHandler(
   request: NextRequest,
   handler: (req: NextRequest) => Promise<NextResponse>
