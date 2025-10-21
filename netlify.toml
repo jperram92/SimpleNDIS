@@ -9,6 +9,10 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["styled-jsx"]
+
 [[redirects]]
   from = "/api/*"
   to = "/api/:splat"
