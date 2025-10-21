@@ -1,9 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Use static export to avoid Next.js plugin issues
-  output: 'export',
-  trailingSlash: true,
-
   // Security headers
   async headers() {
     return [

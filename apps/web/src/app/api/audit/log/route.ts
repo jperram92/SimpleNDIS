@@ -1,26 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@ndis/database';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
-    const { userId, action, resource, details, ipAddress, userAgent } = await request.json();
+    const session = await getServerSession(authOptions);
 
-    await prisma.auditEvent.create({
+    const { action, resource, details } = await request.json();
+
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const auditEvent = await prisma.auditEvent.create({
       data: {
-        userId: userId || null,
+        userId: session.user.id,
+
         action,
+
         resource,
-        details,
-        ipAddress,
-        userAgent,
+
+        details: details || {},
+
+        ipAddress: request.ip || request.headers.get('x-forwarded-for') || 'unknown',
+
+        userAgent: request.headers.get('user-agent') || 'unknown',
       },
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, auditEvent });
   } catch (error) {
-    console.error('Audit logging error:', error);
-    return NextResponse.json({ error: 'Failed to log audit event' }, { status: 500 });
+    console.error('Audit log error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
