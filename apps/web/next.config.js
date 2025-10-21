@@ -1,12 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable styled-jsx for Netlify compatibility
-  experimental: {
-    styledJsx: true,
-  },
-  compiler: {
-    styledJsx: true,
-  },
   // Security headers
   async headers() {
     return [
