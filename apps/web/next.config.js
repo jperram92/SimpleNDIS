@@ -1,5 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    // Ensure styled-jsx is properly bundled for serverless
+    styledComponents: false,
+  },
+  transpilePackages: ['styled-jsx'],
+  webpack: (config, { isServer }) => {
+    // Ensure styled-jsx is included in the bundle
+    if (isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        'styled-jsx/style': require.resolve('styled-jsx/style'),
+      };
+    }
+    return config;
+  },
   // Security headers
   async headers() {
     return [

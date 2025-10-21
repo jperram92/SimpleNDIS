@@ -44,6 +44,9 @@ importers:
       prettier:
         specifier: ^3.1.0
         version: 3.6.2
+      styled-jsx:
+        specifier: ^5.1.7
+        version: 5.1.7(@babel/core@7.28.4)(react@18.3.1)
       turbo:
         specifier: ^1.10.16
         version: 1.13.4
@@ -74,9 +77,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
-      styled-jsx:
-        specifier: ^5.1.7
-        version: 5.1.7(@babel/core@7.28.4)(react@18.3.1)
       zod:
         specifier: ^3.22.0
         version: 3.25.76
@@ -147,6 +147,9 @@ importers:
       prettier:
         specifier: ^3.1.0
         version: 3.6.2
+      styled-jsx:
+        specifier: ^5.1.7
+        version: 5.1.7(@babel/core@7.28.4)(react@18.3.1)
       tailwindcss:
         specifier: ^4.1.14
         version: 4.1.14
@@ -2699,7 +2702,6 @@ packages:
 
   /client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
-    dev: false
 
   /cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
@@ -6127,7 +6129,7 @@ packages:
       '@babel/core': 7.28.4
       client-only: 0.0.1
       react: 18.3.1
-    dev: false
+    dev: true
 
   /supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
