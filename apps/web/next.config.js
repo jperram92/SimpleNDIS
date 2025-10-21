@@ -1,12 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable styled-jsx for Netlify compatibility
   experimental: {
-    // Disable styled-jsx since we're using Tailwind CSS
-    styledJsx: false,
+    styledJsx: true,
   },
   compiler: {
-    // Disable styled-jsx compilation
-    styledJsx: false,
+    styledJsx: true,
   },
   // Security headers
   async headers() {
