@@ -5,7 +5,7 @@
   "description": "NDIS Web Application - Next.js 14",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate --schema=../packages/database/prisma/schema.prisma && cross-env NEXT_PRIVATE_SKIP_STANDALONE_BUILD=true next build",
+    "build": "prisma generate --schema=../../packages/database/prisma/schema.prisma && cross-env NEXT_PRIVATE_SKIP_STANDALONE_BUILD=true next build",
     "start": "next start",
     "lint": "eslint src --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
