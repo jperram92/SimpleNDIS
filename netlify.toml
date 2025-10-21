@@ -1,6 +1,6 @@
 [build]
   base = "."
-  command = "pnpm build"
+  command = "pnpm install --shamefully-hoist && pnpm build"
   publish = "apps/web/.next"
 
 [build.environment]
@@ -12,6 +12,7 @@
 
 [functions]
   node_bundler = "esbuild"
+  external_node_modules = ["styled-jsx", "next"]
 
 [[redirects]]
   from = "/api/*"
