@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Disable standalone build to avoid Windows symlink issues
-  experimental: {
-    serverComponentsExternalPackages: [],
-  },
+  // Use static export to avoid Next.js plugin issues
+  output: 'export',
+  trailingSlash: true,
 
   // Security headers
   async headers() {

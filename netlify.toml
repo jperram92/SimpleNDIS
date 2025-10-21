@@ -1,18 +1,14 @@
 [build]
   base = "."
   command = "pnpm build"
-  publish = "apps/web/.next"
+  publish = "apps/web/out"
 
 [build.environment]
   NODE_VERSION = "18"
-  NEXT_PRIVATE_SKIP_STANDALONE_BUILD = "true"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
 
 [[redirects]]
   from = "/api/*"
-  to = "/api/:splat"
+  to = "/api.html"
   status = 200
 
 [[headers]]
