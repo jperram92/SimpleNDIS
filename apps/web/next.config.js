@@ -19,7 +19,7 @@ const nextConfig = {
               "connect-src 'self'",
               "media-src 'self'",
               "object-src 'none'",
-              "frame-src 'none'",
+              "frame-src 'self'", // Allow same-origin framing for NextAuth
               "base-uri 'self'",
               "form-action 'self'",
             ].join('; '),

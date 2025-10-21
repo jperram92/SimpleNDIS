@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Handler</title>
+</head>
+<body>
+    <h1>API Endpoint</h1>
+    <p>This is a placeholder for API routes in static deployment.</p>
+    <script>
+        // Handle API requests
+        const path = window.location.pathname;
+        if (path.includes('/api/auth')) {
+            // Redirect to login page for auth requests
+            window.location.href = '/';
+        } else if (path.includes('/api/audit')) {
+            // Handle audit requests
+            document.body.innerHTML = '<h1>Audit API</h1><p>Audit logging would be handled here.</p>';
+        } else {
+            document.body.innerHTML = '<h1>API Not Found</h1><p>The requested API endpoint is not available in static mode.</p>';
+        }
+    </script>
+</body>
+</html>

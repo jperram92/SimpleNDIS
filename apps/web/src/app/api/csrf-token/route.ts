@@ -1,13 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
 import crypto from 'crypto';
+import { authOptions } from '@/lib/auth';
 
-// Simple in-memory CSRF token store
+export const dynamic = 'force-dynamic';
+
+// Simple in-memory CSRF token store (in production, use Redis or database)
 const csrfTokens = new Map<string, { token: string; expires: number }>();
 const CSRF_TOKEN_EXPIRY = 60 * 60 * 1000; // 1 hour
 
 function generateCSRFToken(sessionId: string): string {
   const token = crypto.randomBytes(32).toString('hex');
   const expires = Date.now() + CSRF_TOKEN_EXPIRY;
+
   csrfTokens.set(sessionId, { token, expires });
   return token;
 }
@@ -16,11 +21,18 @@ function getSessionId(req: NextRequest): string {
   const forwarded = req.headers.get('x-forwarded-for');
   const ip = forwarded ? forwarded.split(',')[0].trim() : req.ip || 'unknown';
   const userAgent = req.headers.get('user-agent') || '';
+
   return crypto.createHash('sha256').update(`${ip}:${userAgent}`).digest('hex');
 }
 
 export async function GET(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const sessionId = getSessionId(request);
     const csrfToken = generateCSRFToken(sessionId);
 
@@ -48,6 +60,6 @@ export async function GET(request: NextRequest) {
     return response;
   } catch (error) {
     console.error('CSRF token generation error:', error);
-    return NextResponse.json({ error: 'Failed to generate CSRF token' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

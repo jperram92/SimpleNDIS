@@ -8,6 +8,15 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "types": ["@testing-library/jest-dom"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@ndis/ui": ["../../packages/ui/src"],
+      "@ndis/validation": ["../../packages/validation/src"],
+      "@ndis/config": ["../../packages/config/src"],
+      "@ndis/database": ["../../packages/database/src"],
+      "@ndis/types": ["../../packages/types/src"]
+    },
     "plugins": [
       {
         "name": "next"

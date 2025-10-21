@@ -15,7 +15,7 @@
     "typecheck": {
       "outputs": [],
       "cache": false,
-      "dependsOn": ["^build"]
+      "dependsOn": ["@ndis/database#build"]
     },
     "test": {
       "outputs": ["coverage/**"],
