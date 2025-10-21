@@ -1,19 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    // Ensure styled-jsx is properly bundled for serverless
+    // Disable styled-jsx since we're using Tailwind CSS
     styledComponents: false,
   },
-  transpilePackages: ['styled-jsx'],
-  webpack: (config, { isServer }) => {
-    // Ensure styled-jsx is included in the bundle
-    if (isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        'styled-jsx/style': require.resolve('styled-jsx/style'),
-      };
-    }
-    return config;
+  compiler: {
+    // Disable styled-jsx compilation
+    styledComponents: false,
   },
   // Security headers
   async headers() {
