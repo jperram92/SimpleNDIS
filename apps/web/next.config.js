@@ -2,11 +2,11 @@
 const nextConfig = {
   experimental: {
     // Disable styled-jsx since we're using Tailwind CSS
-    styledComponents: false,
+    styledJsx: false,
   },
   compiler: {
     // Disable styled-jsx compilation
-    styledComponents: false,
+    styledJsx: false,
   },
   // Security headers
   async headers() {
