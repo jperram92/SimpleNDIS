@@ -2,3 +2,11 @@ packages:
   - 'apps/*'
   - 'packages/*'
   - 'tooling/*'
+
+# Hoisting config for Netlify/monorepo compatibility
+public-hoist-pattern:
+  - 'styled-jsx'
+  - 'next'
+  - 'react'
+  - 'react-dom'
+  - '@babel/*'

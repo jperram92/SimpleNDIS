@@ -7,13 +7,14 @@
   NODE_VERSION = "18"
   NODE_OPTIONS = "--max-old-space-size=4096"
   NEXT_PRIVATE_SKIP_STANDALONE_BUILD = "true"
+  PNPM_FLAGS = "--shamefully-hoist"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["styled-jsx", "next", "@babel/core"]
+  external_node_modules = ["styled-jsx", "next", "@babel/core", "react", "react-dom"]
 
 [[redirects]]
   from = "/api/*"
