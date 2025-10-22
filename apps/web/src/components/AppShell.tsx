@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useSession } from 'next-auth/react';
+import { useSupabaseSession } from '@/lib/useSupabaseSession';
 import Link from 'next/link';
 
 interface AppShellProps {
@@ -9,8 +9,10 @@ interface AppShellProps {
 }
 
 const AppShell: React.FC<AppShellProps> = ({ children }) => {
-  const { data: session } = useSession();
-  const userRole = session?.user?.role;
+  const { data: session } = useSupabaseSession();
+  const userRole = (session?.user?.user_metadata as Record<string, unknown> | undefined)?.role as
+    | string
+    | undefined;
 
   const navigation = [
     {

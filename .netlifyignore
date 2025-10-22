@@ -1,0 +1,1 @@
+# Don't ignore node_modules - Netlify needs them for function execution

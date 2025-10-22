@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
 import crypto from 'crypto';
-import { authOptions } from '@/lib/auth';
+import { supabaseAdmin } from '@/lib/supabaseServerAdmin';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,11 +26,19 @@ function getSessionId(req: NextRequest): string {
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    // Attempt to locate a bearer token or Supabase cookie
+    const authHeader = request.headers.get('authorization') || '';
+    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+    const cookieToken =
+      token ||
+      request.cookies.get('sb-access-token')?.value ||
+      request.cookies.get('sb:token')?.value ||
+      null;
 
-    if (!session?.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    if (!cookieToken) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    const { data, error } = await supabaseAdmin.auth.getUser(cookieToken);
+    if (error || !data.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const sessionId = getSessionId(request);
     const csrfToken = generateCSRFToken(sessionId);

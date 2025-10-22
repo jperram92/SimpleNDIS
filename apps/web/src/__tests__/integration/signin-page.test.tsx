@@ -2,37 +2,47 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SignIn from '../../app/auth/signin/page';
-import { signIn, getSession, getCsrfToken } from 'next-auth/react';
+// supabase client mocked below
 
-// Mock next-auth
-const mockSignIn = signIn as jest.MockedFunction<typeof signIn>;
-const mockGetSession = getSession as jest.MockedFunction<typeof getSession>;
-const mockGetCsrfToken = getCsrfToken as jest.MockedFunction<typeof getCsrfToken>;
+// Mock supabase client
+const mockSignIn = jest.fn();
+const mockGetSession = jest.fn();
+jest.mock('@/lib/supabaseClient', () => ({
+  supabase: {
+    auth: {
+      signInWithPassword: (...args: unknown[]) => mockSignIn(...args),
+      getSession: () => mockGetSession(),
+      onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
+    },
+  },
+}));
+
+// Mock CSRF token helper
+const mockGetCsrfToken = jest.fn();
+jest.mock('@/lib/getCsrfToken', () => ({
+  getCsrfToken: () => mockGetCsrfToken(),
+}));
 
 describe('SignIn Integration Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    // Mock successful CSRF token fetch
-    mockGetCsrfToken.mockResolvedValue('test-csrf-token-123');
+    // Mock successful CSRF token fetch (the page calls /api/csrf-token which we don't actually call here)
+    mockGetCsrfToken.mockResolvedValue?.('test-csrf-token-123');
 
-    // Mock successful signin
-    mockSignIn.mockResolvedValue({
-      ok: true,
+    // Mock successful signin (return a session so component proceeds to fetch session)
+    mockSignIn.mockResolvedValue?.({
+      data: {
+        session: { user: { id: '1', email: 'test@example.com', user_metadata: { role: 'USER' } } },
+      },
       error: null,
-      status: 200,
-      url: null,
     });
 
     // Mock session retrieval
-    mockGetSession.mockResolvedValue({
-      user: {
-        id: '1',
-        email: 'test@example.com',
-        name: 'Test User',
-        role: 'USER',
+    mockGetSession.mockResolvedValue?.({
+      data: {
+        session: { user: { id: '1', email: 'test@example.com', user_metadata: { role: 'USER' } } },
       },
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
     });
   });
 
@@ -76,16 +86,15 @@ describe('SignIn Integration Tests', () => {
     await user.type(passwordInput, 'ValidPass123!');
     await user.click(submitButton);
 
-    // Verify signIn was called with correct parameters
+    // Verify signIn was called with correct parameters (supabase)
     await waitFor(() => {
-      expect(mockSignIn).toHaveBeenCalledWith('credentials', {
+      expect(mockSignIn).toHaveBeenCalledWith({
         email: 'test@example.com',
         password: 'ValidPass123!',
-        redirect: false,
       });
     });
 
-    // Verify session was retrieved
+    // Verify session was retrieved via the supabase client
     expect(mockGetSession).toHaveBeenCalled();
   });
 
@@ -130,11 +139,10 @@ describe('SignIn Integration Tests', () => {
     expect(csrfInput).toHaveAttribute('type', 'hidden');
     expect(csrfInput).toHaveAttribute('name', 'csrfToken');
 
-    // Verify signIn was called without csrfToken parameter (NextAuth handles it automatically)
-    expect(mockSignIn).toHaveBeenCalledWith('credentials', {
+    // Verify signIn was called with supabase parameters
+    expect(mockSignIn).toHaveBeenCalledWith({
       email: 'test@example.com',
       password: 'ValidPass123!',
-      redirect: false,
     });
   });
 });

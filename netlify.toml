@@ -1,18 +1,15 @@
 [build]
   base = "."
-  command = "pnpm build"
+  command = "pnpm install --shamefully-hoist && pnpm build"
   publish = "apps/web/.next"
 
 [build.environment]
   NODE_VERSION = "18"
+  NODE_OPTIONS = "--max-old-space-size=4096"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-
-[[redirects]]
-  from = "/api/*"
-  to = "/api/:splat"
-  status = 200
+  version = "5.14.3"
 
 [[headers]]
   for = "/*"

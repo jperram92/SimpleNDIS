@@ -17,31 +17,18 @@ jest.mock('next/navigation', () => ({
   },
 }));
 
-// Mock next-auth
-jest.mock('next-auth/react', () => ({
-  useSession: jest.fn(() => ({
-    data: null,
-    status: 'unauthenticated',
-  })),
-  signIn: jest.fn(),
-  signOut: jest.fn(),
-  getSession: jest.fn(),
-  getCsrfToken: jest.fn(),
-  SessionProvider: ({ children }: { children: React.ReactNode }) => children,
-}));
-
-jest.mock('next-auth', () => ({
-  getServerSession: jest.fn(),
-}));
-
-// Mock next-auth providers
-jest.mock('next-auth/providers/credentials', () => ({
-  default: jest.fn(() => ({
-    id: 'credentials',
-    name: 'credentials',
-    type: 'credentials',
-    authorize: jest.fn(),
-  })),
+// Mock supabase client used by client code/tests
+const mockSignIn = jest.fn();
+const mockGetSession = jest.fn().mockResolvedValue({ data: { session: null } });
+const mockOnAuth = jest.fn(() => ({ data: { subscription: { unsubscribe: () => {} } } }));
+jest.mock('@/lib/supabaseClient', () => ({
+  supabase: {
+    auth: {
+      signInWithPassword: () => mockSignIn(),
+      getSession: () => mockGetSession(),
+      onAuthStateChange: () => mockOnAuth(),
+    },
+  },
 }));
 
 // Mock PrismaAdapter

@@ -1,20 +1,15 @@
-import { DefaultSession } from 'next-auth';
-
-declare module 'next-auth' {
-  interface Session {
-    user: {
+// Supabase session types used across the app (replaces next-auth augmentation)
+declare global {
+  namespace SupabaseAuth {
+    interface User {
       id: string;
-      role: string;
-    } & DefaultSession['user'];
-  }
-
-  interface User {
-    role: string;
-  }
-}
-
-declare module 'next-auth/jwt' {
-  interface JWT {
-    role: string;
+      email?: string | null;
+      user_metadata?: Record<string, unknown>;
+    }
+    interface Session {
+      user?: User | null;
+    }
   }
 }
+
+export {};

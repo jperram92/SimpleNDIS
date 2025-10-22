@@ -1,32 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { JWT } from 'next-auth/jwt';
-import type { Session } from 'next-auth';
 
-// JWT callback for NextAuth - matches NextAuth's jwt callback signature
+// Generic JWT callback shim used by tests — stores role on token when user is present
 export const jwtCallback = async (params: {
-  token: JWT;
-  user?: any;
+  token: Record<string, any>;
+  user?: Record<string, any> | undefined;
   account?: any;
   profile?: any;
   trigger?: 'signIn' | 'signUp' | 'update';
   isNewUser?: boolean;
   session?: any;
-}): Promise<JWT> => {
+}): Promise<Record<string, any>> => {
   const { token, user } = params;
-  if (user) {
-    token.role = user.role;
-  }
+  if (user) token.role = user.role;
   return token;
 };
 
-// Session callback for NextAuth - matches NextAuth's session callback signature
+// Generic session callback shim used by tests — attaches id and role from token
 export const sessionCallback = async (params: {
-  session: Session;
-  token: JWT;
+  session: Record<string, any>;
+  token: Record<string, any>;
   user?: any;
   newSession?: any;
   trigger?: 'update' | 'getSession';
-}): Promise<Session> => {
+}): Promise<Record<string, any>> => {
   const { session, token } = params;
   if (token && session.user && token.sub) {
     session.user.id = token.sub;
