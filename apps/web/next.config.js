@@ -1,20 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Webpack configuration for proper dependency handling
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      // Ensure styled-jsx is not marked as external on the server side
-      config.externals = config.externals || {};
-      if (Array.isArray(config.externals)) {
-        // If externals is an array, filter out styled-jsx
-        config.externals = config.externals.filter(
-          (ext) => ext !== 'styled-jsx' && ext !== 'styled-jsx/style'
-        );
-      }
-    }
-    return config;
-  },
-
   // Security headers
   async headers() {
     return [
