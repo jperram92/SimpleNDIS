@@ -1,32 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { supabaseAdmin } from '@/lib/supabaseServerAdmin';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
     const { action, resource, details } = await request.json();
 
-    if (!session?.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const authHeader = request.headers.get('authorization') || '';
+    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+    const cookieToken =
+      token ||
+      request.cookies.get('sb-access-token')?.value ||
+      request.cookies.get('sb:token')?.value ||
+      null;
+
+    if (!cookieToken) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    const { data, error } = await supabaseAdmin.auth.getUser(cookieToken);
+    if (error || !data.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const auditEvent = await prisma.auditEvent.create({
       data: {
-        userId: session.user.id,
-
+        userId: data.user.id,
         action,
-
         resource,
-
         details: details || {},
-
         ipAddress: request.ip || request.headers.get('x-forwarded-for') || 'unknown',
-
         userAgent: request.headers.get('user-agent') || 'unknown',
       },
     });
